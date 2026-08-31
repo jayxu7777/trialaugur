@@ -2,18 +2,6 @@
 
 (async function () {
   const rows = await loadJSON("data/results.json");
-  const st = await loadJSON("data/stats.json");
-
-  const nSucc = rows.filter((r) => r.outcome === "success").length;
-  const nFail = rows.filter((r) => r.outcome === "fail").length;
-  const pct = st.accuracy != null ? (st.accuracy * 100).toFixed(1) : null;
-  document.getElementById("tally").innerHTML =
-    `Prospective window since 1 July 2026: <b>${rows.length}</b> binary readouts — ` +
-    `${nSucc} success · ${nFail} fail. Locked baseline (rank-average ensemble, notarized ` +
-    `on-chain 20 Jul 2026): <b>${st.n_correct}/${st.n_adjudicated}</b>` +
-    `${pct != null ? ` (${pct}%)` : ""} correct, <b>${st.n_strict_correct}/${st.n_strict}</b> ` +
-    `strictly post-baseline-lock. A further ${st.n_reported_pre} cohort trials were disclosed ` +
-    `before the study snapshot and are consolidated in the paper's evaluation.`;
 
   // On-chain proof block (shared renderer in common.js)
   renderNotarization("notarization");
