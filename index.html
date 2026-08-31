@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TrialAugur — prospective clinical-trial readout benchmark</title>
+  <meta name="description" content="A prospective, spin-aware benchmark for clinical-trial outcome prediction: frozen evidence dossiers, timestamped baseline predictions, and biweekly adjudicated readouts.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔮</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=2">
+  <script src="js/config.js?v=1"></script>
+</head>
+<body data-page="home">
+  <div id="site-header"></div>
+
+  <div class="container">
+    <section class="hero">
+      <h1>TrialAugur</h1>
+      <p>A live, prospective benchmark for predicting clinical-trial readouts.
+        We maintain frozen evidence dossiers and publish timestamped baseline
+        predictions for <b>706 unresolved trials</b>, then adjudicate every new
+        readout with a spin-aware review — so predictions are locked before
+        outcomes exist, and every label links to its evidence.</p>
+      <p style="margin-top:14px">
+        <a class="btn" href="predictions.html">Baseline predictions</a>
+        <a class="btn secondary" href="results.html">Latest results</a>
+      </p>
+    </section>
+
+    <section class="stats" id="stats">
+      <div class="stat-card"><div class="label">Trials tracked</div><div class="value" id="stat-cohort">—</div><div class="detail">prospective cohort, all phases</div></div>
+      <div class="stat-card"><div class="label">Pending readouts</div><div class="value" id="stat-pending">—</div><div class="detail">outcome not yet public</div></div>
+      <div class="stat-card"><div class="label">Readouts adjudicated</div><div class="value" id="stat-reported">—</div><div class="detail" id="stat-reported-detail">since July 2026</div></div>
+      <div class="stat-card"><div class="label">Baseline accuracy</div><div class="value" id="stat-acc">—</div><div class="detail" id="stat-acc-detail">on adjudicated readouts</div></div>
+    </section>
+    <p class="stats-footnote" id="stats-footnote"></p>
+
+    <h2 class="section-title">How it works</h2>
+    <section class="cards">
+      <div class="card">
+        <div class="step">1 · WE PUBLISH</div>
+        <h3>Frozen dossiers &amp; locked predictions</h3>
+        <p>Each trial ships with a <b>53-variable evidence dossier</b> (design,
+          sponsor profile, mechanism, target biology, prior-phase results — assembled
+          before readout) and our ensemble's probability of success, frozen and
+          timestamped. Registry result fields are excluded to prevent leakage.</p>
+      </div>
+      <div class="card">
+        <div class="step">2 · WE ADJUDICATE</div>
+        <h3>Spin-aware readout labels</h3>
+        <p>Roughly every two weeks, newly reported readouts are labeled
+          <b>success / fail</b> by evidence-based review rather than press-release
+          framing. Every call links its primary evidence and carries an
+          adjudication note; ambiguous readouts stay <b>under review</b>.</p>
+      </div>
+      <div class="card">
+        <div class="step">3 · YOU CONTRIBUTE</div>
+        <h3>Community predictions</h3>
+        <p>We provide the readouts and the adjudication — the models come from you.
+          Run your method on features built from sources dated before readout,
+          submit timestamped predictions while trials are still pending, and get
+          scored against the same labels.
+          <a href="contribute.html">How to contribute →</a></p>
+      </div>
+    </section>
+
+    <div class="callout">
+      <h3>Why adjudication has to be spin-aware</h3>
+      <p>Sponsor communications are systematically optimistic: in recent catalyst
+        samples ~80% of company press releases frame results positively, yet only a
+        minority explicitly state that the primary endpoint was met — and registry
+        result posting lags by months to years. Automated answer-scraping would
+        inflate success rates, so outcomes here are adjudicated from primary
+        evidence, and each label can be audited via its linked source.</p>
+    </div>
+
+    <h2 class="section-title">Paper</h2>
+    <div class="paper-box">
+      <h3>Reference publication<span class="placeholder-tag" id="paper-tag">PLACEHOLDER</span></h3>
+      <div class="cite" id="paper-cite">—</div>
+      <p style="font-size:12px;margin:10px 0 0;color:var(--navy-300)" id="paper-note">
+        The accompanying manuscript is in preparation. This box will carry the
+        citation and link once public.</p>
+    </div>
+  </div>
+
+  <div id="site-footer"></div>
+  <script src="js/common.js?v=1"></script>
+  <script src="js/home.js?v=2"></script>
+</body>
+</html>

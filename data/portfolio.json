@@ -1,0 +1,662 @@
+{
+ "as_of": "2026-08-31",
+ "entry_rule": "first close on/after 2026-07-01",
+ "exit_rule": "mean of D0/D+1/D+2 closes after the readout",
+ "n": 35,
+ "n_long": 23,
+ "n_short": 9,
+ "n_cash": 3,
+ "total_return": 0.1222,
+ "long_avg": 0.0781,
+ "short_avg": 0.2758,
+ "xbi_same_period": 0.0296,
+ "positions": [
+  {
+   "nct": "NCT06747468",
+   "ticker": "AMLX",
+   "company": "Amylyx Pharmaceuticals",
+   "call": "success",
+   "outcome": "success",
+   "date": "2026-08-18",
+   "side": "long",
+   "entry": 17.95,
+   "exit": 37.79,
+   "ret": 1.1053,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-08-18",
+    "2026-08-19",
+    "2026-08-20"
+   ]
+  },
+  {
+   "nct": "NCT05933577",
+   "ticker": "MRNA",
+   "company": "Moderna",
+   "call": "success",
+   "outcome": "success",
+   "date": "2026-08-19",
+   "side": "long",
+   "entry": 72.5,
+   "exit": 150.94,
+   "ret": 1.082,
+   "note": "V940 partner; trial sponsor Merck",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-08-19",
+    "2026-08-20",
+    "2026-08-21"
+   ]
+  },
+  {
+   "nct": "NCT05983250",
+   "ticker": "TENX",
+   "company": "Tenax Therapeutics",
+   "call": "fail",
+   "outcome": "fail",
+   "date": "2026-08-10",
+   "side": "short",
+   "entry": 13.29,
+   "exit": 1.57,
+   "ret": 0.8817,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-08-10",
+    "2026-08-11",
+    "2026-08-12"
+   ]
+  },
+  {
+   "nct": "NCT07108153",
+   "ticker": "SION",
+   "company": "Sionna Therapeutics",
+   "call": "fail",
+   "outcome": "fail",
+   "date": "2026-08-10",
+   "side": "short",
+   "entry": 41.64,
+   "exit": 5.28,
+   "ret": 0.8731,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-08-10",
+    "2026-08-11",
+    "2026-08-12"
+   ]
+  },
+  {
+   "nct": "NCT05611931",
+   "ticker": "KPTI",
+   "company": "Karyopharm Therapeutics",
+   "call": "fail",
+   "outcome": "fail",
+   "date": "2026-07-30",
+   "side": "short",
+   "entry": 9.55,
+   "exit": 3.63,
+   "ret": 0.6195,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-07-30",
+    "2026-07-31",
+    "2026-08-03"
+   ]
+  },
+  {
+   "nct": "NCT05499013",
+   "ticker": "SLN",
+   "company": "Silence Therapeutics (ADR)",
+   "call": "success",
+   "outcome": "success",
+   "date": "2026-08-10",
+   "side": "long",
+   "entry": 10.5,
+   "exit": 14.58,
+   "ret": 0.3883,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-08-10",
+    "2026-08-11",
+    "2026-08-12"
+   ]
+  },
+  {
+   "nct": "NCT07118891",
+   "ticker": "ABCL",
+   "company": "AbCellera Biologics",
+   "call": "success",
+   "outcome": "success",
+   "date": "2026-08-10",
+   "side": "long",
+   "entry": 7.6,
+   "exit": 9.82,
+   "ret": 0.2919,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-08-10",
+    "2026-08-11",
+    "2026-08-12"
+   ]
+  },
+  {
+   "nct": "NCT05583227",
+   "ticker": "AMGN",
+   "company": "Amgen",
+   "call": "success",
+   "outcome": "success",
+   "date": "2026-08-27",
+   "side": "long",
+   "entry": 361.33,
+   "exit": 433.53,
+   "ret": 0.1998,
+   "note": "Tezspire partner: AstraZeneca",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-08-27",
+    "2026-08-28",
+    "2026-08-31"
+   ]
+  },
+  {
+   "nct": "NCT02704858",
+   "ticker": "NTHI",
+   "company": "NeOnc Technologies",
+   "call": "fail",
+   "outcome": "success",
+   "date": "2026-08-12",
+   "side": "short",
+   "entry": 4.46,
+   "exit": 3.63,
+   "ret": 0.1861,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-08-12",
+    "2026-08-13",
+    "2026-08-14"
+   ]
+  },
+  {
+   "nct": "NCT06775860",
+   "ticker": "9969.HK",
+   "company": "InnoCare Pharma",
+   "call": "success",
+   "outcome": "success",
+   "date": "2026-07-15",
+   "side": "long",
+   "entry": 12.34,
+   "exit": 14.43,
+   "ret": 0.1696,
+   "note": "HKEX 09969",
+   "entry_date": "2026-07-02",
+   "exit_dates": [
+    "2026-07-15",
+    "2026-07-16",
+    "2026-07-17"
+   ]
+  },
+  {
+   "nct": "NCT05973773",
+   "ticker": "CGEM",
+   "company": "Cullinan Therapeutics",
+   "call": "success",
+   "outcome": "success",
+   "date": "2026-08-12",
+   "side": "long",
+   "entry": 17.28,
+   "exit": 19.86,
+   "ret": 0.1493,
+   "note": "US partner; sponsor Taiho/Otsuka",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-08-12",
+    "2026-08-13",
+    "2026-08-14"
+   ]
+  },
+  {
+   "nct": "NCT05523167",
+   "ticker": "ARGX",
+   "company": "argenx (ADR)",
+   "call": "success",
+   "outcome": "success",
+   "date": "2026-08-17",
+   "side": "long",
+   "entry": 909.5,
+   "exit": 1004.56,
+   "ret": 0.1045,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-08-17",
+    "2026-08-18",
+    "2026-08-19"
+   ]
+  },
+  {
+   "nct": "NCT06407934",
+   "ticker": "SNY",
+   "company": "Sanofi (ADR)",
+   "call": "success",
+   "outcome": "fail",
+   "date": "2026-07-24",
+   "side": "long",
+   "entry": 41.63,
+   "exit": 44.3,
+   "ret": 0.0641,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-07-24",
+    "2026-07-27",
+    "2026-07-28"
+   ]
+  },
+  {
+   "nct": "NCT06987513",
+   "ticker": "ALT",
+   "company": "Altimmune",
+   "call": "fail",
+   "outcome": "success",
+   "date": "2026-07-28",
+   "side": "short",
+   "entry": 3.15,
+   "exit": 2.96,
+   "ret": 0.0593,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-07-28",
+    "2026-07-29",
+    "2026-07-30"
+   ]
+  },
+  {
+   "nct": "NCT06072183",
+   "ticker": "PFE",
+   "company": "Pfizer",
+   "call": "success",
+   "outcome": "success",
+   "date": "2026-07-30",
+   "side": "long",
+   "entry": 23.88,
+   "exit": 24.98,
+   "ret": 0.0462,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-07-30",
+    "2026-07-31",
+    "2026-08-03"
+   ]
+  },
+  {
+   "nct": "NCT05047094",
+   "ticker": "DRTS",
+   "company": "Alpha Tau Medical",
+   "call": "success",
+   "outcome": "success",
+   "date": "2026-07-21",
+   "side": "long",
+   "entry": 12.64,
+   "exit": 13.19,
+   "ret": 0.0435,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-07-21",
+    "2026-07-22",
+    "2026-07-23"
+   ]
+  },
+  {
+   "nct": "NCT06630299",
+   "ticker": "GILD",
+   "company": "Gilead Sciences",
+   "call": "success",
+   "outcome": "success",
+   "date": "2026-07-21",
+   "side": "long",
+   "entry": 125.97,
+   "exit": 130.49,
+   "ret": 0.0359,
+   "note": "partner: Merck",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-07-21",
+    "2026-07-22",
+    "2026-07-23"
+   ]
+  },
+  {
+   "nct": "NCT05211895",
+   "ticker": "RCUS",
+   "company": "Arcus Biosciences",
+   "call": "fail",
+   "outcome": "fail",
+   "date": "2026-08-05",
+   "side": "short",
+   "entry": 28.92,
+   "exit": 28.22,
+   "ret": 0.0243,
+   "note": "drug owner; trial sponsor AstraZeneca",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-08-05",
+    "2026-08-06",
+    "2026-08-07"
+   ]
+  },
+  {
+   "nct": "NCT06924970",
+   "ticker": "AGIO",
+   "company": "Agios Pharmaceuticals",
+   "call": "fail",
+   "outcome": "fail",
+   "date": "2026-07-21",
+   "side": "short",
+   "entry": 37.08,
+   "exit": 36.56,
+   "ret": 0.0139,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-07-21",
+    "2026-07-22",
+    "2026-07-23"
+   ]
+  },
+  {
+   "nct": "NCT05723562",
+   "ticker": "GSK",
+   "company": "GSK (ADR)",
+   "call": "success",
+   "outcome": "success",
+   "date": "2026-07-13",
+   "side": "long",
+   "entry": 51.3,
+   "exit": 51.66,
+   "ret": 0.0071,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-07-13",
+    "2026-07-14",
+    "2026-07-15"
+   ]
+  },
+  {
+   "nct": "NCT05997056",
+   "ticker": null,
+   "company": "Aadi Bioscience",
+   "call": "fail",
+   "outcome": "fail",
+   "date": "2026-08-25",
+   "side": "cash",
+   "entry": null,
+   "exit": null,
+   "ret": 0.0,
+   "note": "renamed Whitehawk; nab-sirolimus divested to Kaken - no exposed US listing; not listed"
+  },
+  {
+   "nct": "NCT06741228",
+   "ticker": null,
+   "company": "Definium Therapeutics",
+   "call": "success",
+   "outcome": "success",
+   "date": "2026-08-12",
+   "side": "cash",
+   "entry": null,
+   "exit": null,
+   "ret": 0.0,
+   "note": "private; not listed"
+  },
+  {
+   "nct": "NCT06993428",
+   "ticker": null,
+   "company": "Empros Pharma",
+   "call": "fail",
+   "outcome": "fail",
+   "date": "2026-07-13",
+   "side": "cash",
+   "entry": null,
+   "exit": null,
+   "ret": 0.0,
+   "note": "private; not listed"
+  },
+  {
+   "nct": "NCT05600777",
+   "ticker": "GSK",
+   "company": "GSK (ADR)",
+   "call": "success",
+   "outcome": "fail",
+   "date": "2026-07-17",
+   "side": "long",
+   "entry": 51.3,
+   "exit": 50.86,
+   "ret": -0.0086,
+   "note": "Bellus acquired by GSK",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-07-17",
+    "2026-07-20",
+    "2026-07-21"
+   ]
+  },
+  {
+   "nct": "NCT05686551",
+   "ticker": "RHHBY",
+   "company": "Roche (ADR)",
+   "call": "fail",
+   "outcome": "fail",
+   "date": "2026-07-09",
+   "side": "short",
+   "entry": 50.32,
+   "exit": 51.47,
+   "ret": -0.0229,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-07-09",
+    "2026-07-10",
+    "2026-07-13"
+   ]
+  },
+  {
+   "nct": "NCT07344558",
+   "ticker": "MNKD",
+   "company": "MannKind",
+   "call": "success",
+   "outcome": "success",
+   "date": "2026-07-29",
+   "side": "long",
+   "entry": 4.05,
+   "exit": 3.96,
+   "ret": -0.023,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-07-29",
+    "2026-07-30",
+    "2026-07-31"
+   ]
+  },
+  {
+   "nct": "NCT05322070",
+   "ticker": "ANIP",
+   "company": "ANI Pharmaceuticals",
+   "call": "success",
+   "outcome": "success",
+   "date": "2026-07-13",
+   "side": "long",
+   "entry": 83.05,
+   "exit": 80.82,
+   "ret": -0.0269,
+   "note": "Alimera acquired by ANI",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-07-13",
+    "2026-07-14",
+    "2026-07-15"
+   ]
+  },
+  {
+   "nct": "NCT06868264",
+   "ticker": "AVIR",
+   "company": "Atea Pharmaceuticals",
+   "call": "success",
+   "outcome": "success",
+   "date": "2026-07-28",
+   "side": "long",
+   "entry": 4.78,
+   "exit": 4.62,
+   "ret": -0.0328,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-07-28",
+    "2026-07-29",
+    "2026-07-30"
+   ]
+  },
+  {
+   "nct": "NCT06366750",
+   "ticker": "CLDX",
+   "company": "Celldex Therapeutics",
+   "call": "success",
+   "outcome": "fail",
+   "date": "2026-07-21",
+   "side": "long",
+   "entry": 36.78,
+   "exit": 35.28,
+   "ret": -0.0407,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-07-21",
+    "2026-07-22",
+    "2026-07-23"
+   ]
+  },
+  {
+   "nct": "NCT05021835",
+   "ticker": "NVO",
+   "company": "Novo Nordisk (ADR)",
+   "call": "success",
+   "outcome": "fail",
+   "date": "2026-07-31",
+   "side": "long",
+   "entry": 48.77,
+   "exit": 46.15,
+   "ret": -0.0537,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-07-31",
+    "2026-08-03",
+    "2026-08-04"
+   ]
+  },
+  {
+   "nct": "NCT05048797",
+   "ticker": "AZN",
+   "company": "AstraZeneca (ADR)",
+   "call": "success",
+   "outcome": "success",
+   "date": "2026-08-17",
+   "side": "long",
+   "entry": 183.86,
+   "exit": 160.65,
+   "ret": -0.1263,
+   "note": "T-DXd partner: Daiichi Sankyo",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-08-17",
+    "2026-08-18",
+    "2026-08-19"
+   ]
+  },
+  {
+   "nct": "NCT05261399",
+   "ticker": "AZN",
+   "company": "AstraZeneca (ADR)",
+   "call": "success",
+   "outcome": "success",
+   "date": "2026-08-16",
+   "side": "long",
+   "entry": 183.86,
+   "exit": 160.65,
+   "ret": -0.1263,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-08-17",
+    "2026-08-18",
+    "2026-08-19"
+   ]
+  },
+  {
+   "nct": "NCT06809179",
+   "ticker": "VTGN",
+   "company": "Vistagen Therapeutics",
+   "call": "fail",
+   "outcome": "fail",
+   "date": "2026-08-06",
+   "side": "short",
+   "entry": 0.24,
+   "exit": 0.28,
+   "ret": -0.1528,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-08-06",
+    "2026-08-07",
+    "2026-08-10"
+   ]
+  },
+  {
+   "nct": "NCT06668064",
+   "ticker": "EYPT",
+   "company": "EyePoint Pharmaceuticals",
+   "call": "success",
+   "outcome": "fail",
+   "date": "2026-08-17",
+   "side": "long",
+   "entry": 13.2,
+   "exit": 5.55,
+   "ret": -0.5798,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-08-17",
+    "2026-08-18",
+    "2026-08-19"
+   ]
+  },
+  {
+   "nct": "NCT07035990",
+   "ticker": "SION",
+   "company": "Sionna Therapeutics",
+   "call": "success",
+   "outcome": "success",
+   "date": "2026-08-10",
+   "side": "long",
+   "entry": 41.64,
+   "exit": 5.28,
+   "ret": -0.8731,
+   "note": "",
+   "entry_date": "2026-07-01",
+   "exit_dates": [
+    "2026-08-10",
+    "2026-08-11",
+    "2026-08-12"
+   ]
+  }
+ ]
+}

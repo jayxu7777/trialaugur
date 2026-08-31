@@ -1,0 +1,16 @@
+{
+  "snapshot": "2026-08-30",
+  "n_cohort": 706,
+  "n_pending": 622,
+  "n_reported_new": 35,
+  "n_reported_pre": 41,
+  "n_adjudicated": 35,
+  "n_correct": 28,
+  "accuracy": 0.8,
+  "n_binary_all": 35,
+  "n_binary_correct_all": 28,
+  "n_strict": 21,
+  "n_strict_correct": 18,
+  "auc_full37": 0.772,
+  "auc_strict": 0.856
+}

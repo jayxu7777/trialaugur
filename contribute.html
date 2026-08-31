@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contribute — TrialAugur</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔮</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=1">
+  <script src="js/config.js?v=1"></script>
+</head>
+<body data-page="contribute">
+  <div id="site-header"></div>
+
+  <div class="container narrow prose">
+    <h1 class="page-title">Contribute predictions</h1>
+    <p class="page-intro">TrialAugur is a FutureX-style live benchmark: the questions
+      are real upcoming trial readouts, so answers cannot exist in any training set.
+      <b>We provide the readouts and the adjudicated labels; the predictions come from
+      the community.</b> Submit while trials are pending, and your model is scored on
+      exactly the trials that were unresolved at your submission time.</p>
+
+    <h2>What to submit</h2>
+    <p>One CSV per model, one row per trial you want scored:</p>
+    <table>
+      <tr><th>Column</th><th>Type</th><th>Description</th></tr>
+      <tr><td><code>nct_id</code></td><td>string</td><td>Trial identifier from the <a href="predictions.html">predictions table</a> (e.g. NCT05499013)</td></tr>
+      <tr><td><code>p_success</code></td><td>float 0–1</td><td>Predicted probability that the trial reads out as a success</td></tr>
+      <tr><td><code>model_name</code></td><td>string</td><td>Short stable name for your method (also the file name)</td></tr>
+      <tr><td><code>generated_at</code></td><td>ISO date</td><td>When the predictions were produced</td></tr>
+    </table>
+    <pre>nct_id,p_success,model_name,generated_at
+NCT06846541,0.82,my-model-v1,2026-09-01
+NCT06109181,0.44,my-model-v1,2026-09-01</pre>
+
+    <h2>Rules</h2>
+    <ul>
+      <li><b>Lock before readout.</b> Only predictions submitted while a trial is
+        still pending are scored for that trial. The submission timestamp is the
+        lock; for pull requests, the commit time is authoritative.</li>
+      <li><b>No post-hoc edits.</b> You may update predictions for trials that are
+        still pending; predictions for reported trials are frozen at their last
+        pre-readout value.</li>
+      <li><b>Any evidence dated before readout is fair game.</b> Build your
+        features from literature, registries, filings — anything, as long as the
+        information predates the readout.</li>
+      <li><b>Coverage is flexible.</b> Predict any subset of pending trials; metrics
+        are reported alongside the number of trials covered.</li>
+    </ul>
+
+    <h2>How to submit</h2>
+    <ul>
+      <li><b>Pull request (preferred):</b> add your CSV as
+        <code>submissions/&lt;model_name&gt;.csv</code> in
+        <a data-site-link="repo" href="#" target="_blank" rel="noopener">the site repository</a>.
+        The commit timestamp becomes your lock time.</li>
+      <li><b>GitHub issue:</b> open an issue on
+        <a data-site-link="issues" href="#" target="_blank" rel="noopener">the tracker</a>
+        with your CSV attached if you prefer not to open a PR.</li>
+    </ul>
+
+    <h2>Scoring</h2>
+    <p>After each adjudication round, submissions are evaluated on the trials that
+      were pending at their lock time and have since been adjudicated
+      <b>success</b> or <b>fail</b> (trials under review are excluded until
+      resolved):</p>
+    <ul>
+      <li><b>ROC–AUC</b> and <b>Brier score</b> over covered trials</li>
+      <li><b>Accuracy at the 0.5 threshold</b></li>
+      <li><b>High-confidence accuracy</b> — accuracy on the top 20% / 30% of
+        predictions ranked by |p − 0.5|</li>
+    </ul>
+    <p>Our own locked ensemble (<a href="predictions.html">Predictions</a>) is scored
+      under identical rules and serves as the reference baseline. A public
+      leaderboard will appear here once external submissions arrive.</p>
+
+    <h2>Questions</h2>
+    <p id="contact-line">Open an issue on
+      <a data-site-link="issues" href="#" target="_blank" rel="noopener">the tracker</a> —
+      including for disagreements with an adjudicated label. Label disputes are
+      re-reviewed against the linked evidence and revisions are recorded.</p>
+  </div>
+
+  <div id="site-footer"></div>
+  <script src="js/common.js?v=1"></script>
+  <script>
+    if (window.SITE.contactEmail) {
+      document.getElementById("contact-line").insertAdjacentHTML("beforeend",
+        ` Or email <a href="mailto:${SITE.contactEmail}">${SITE.contactEmail}</a>.`);
+    }
+  </script>
+</body>
+</html>

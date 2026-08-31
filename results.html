@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Results — TrialAugur</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔮</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/tabulator-tables@5.6.1/dist/css/tabulator.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=4">
+  <script src="js/config.js?v=1"></script>
+</head>
+<body data-page="results">
+  <div id="site-header"></div>
+
+  <div class="container">
+    <h1 class="page-title">Adjudicated readouts</h1>
+    <p class="page-intro" id="intro">Prospective binary readouts from the cohort —
+      trials whose primary outcome (success or fail) became public on or after
+      1 July 2026, adjudicated by spin-aware review roughly every two weeks. Each
+      row links its <b>primary evidence</b> and carries our <b>adjudication note</b>;
+      the ✓/✗ column scores the locked baseline prediction. Disclosures that are
+      mixed, strategic terminations, or not yet establishable at the primary
+      endpoint are excluded from this ledger and consolidated in the paper.</p>
+    <p class="page-intro muted" id="tally"></p>
+
+    <section class="eval-block" id="eval-block" hidden>
+      <h2 class="eval-title">Model evaluation — prospective windows</h2>
+      <p class="page-intro" id="eval-intro"></p>
+      <div id="eval-tables"></div>
+      <div id="notarization"></div>
+      <figure class="eval-fig">
+        <img src="img/strict_window_auc_acc.png"
+             alt="Line chart of ROC-AUC (with bootstrap 95% CI whiskers) and accuracy at the 0.5 threshold for ten models on the strict post-lock window of 21 readouts, sorted by ROC-AUC. Locked pipeline models are bold; frontier zero-shot baselines are grey. GPT-5 reasoning (ours) leads at 0.976; the rank-average ensemble reaches 0.856 AUC and 85.7% accuracy.">
+        <figcaption>ROC-AUC and accuracy by model on the strict post-lock window (n = 21). Whiskers: bootstrap 95% CI on ROC-AUC. Bold = locked pipeline; grey = frontier baseline.</figcaption>
+      </figure>
+    </section>
+
+    <h2 class="eval-title">Readout ledger</h2>
+    <div class="filters">
+      <input type="search" id="q" placeholder="Search NCT ID, drug, sponsor, condition…" autocomplete="off">
+      <select id="f-phase"><option value="">All phases</option></select>
+      <select id="f-outcome"><option value="">All outcomes</option>
+        <option value="success">Success</option>
+        <option value="fail">Fail</option>
+      </select>
+      <select id="f-window"><option value="">All windows</option>
+        <option value="post-lock">Post-baseline-lock (strict)</option>
+        <option value="pre-baseline-lock">Pre-baseline-lock (Jul 1-29)</option>
+      </select>
+      <span class="hint" id="count"></span>
+    </div>
+
+    <div id="grid"></div>
+
+    <section class="eval-block" id="mkt-block" hidden>
+      <h2 class="eval-title">Market reaction</h2>
+      <p class="page-intro" id="mkt-intro"></p>
+      <div id="mkt-table"></div>
+
+      <h2 class="eval-title">Prediction portfolio backtest</h2>
+      <p class="page-intro" id="pf-intro"></p>
+      <div id="pf-table"></div>
+      <p class="eval-sub" id="pf-note"></p>
+
+      <p class="eval-sub">Raw close-to-close moves of the most exposed listed company, not
+        market-adjusted. Baseline = last close before the announcement; D0 = announcement day.
+        After-hours announcements show up on D+1 (e.g. selinexor). Trials sharing one corporate
+        disclosure share the same reaction (e.g. the two Sionna programs). Large-cap sponsors
+        dilute single-trial effects. Prices: Yahoo Finance daily closes.</p>
+    </section>
+  </div>
+
+  <div id="site-footer"></div>
+  <script src="https://unpkg.com/tabulator-tables@5.6.1/dist/js/tabulator.min.js"></script>
+  <script src="js/common.js?v=2"></script>
+  <script src="js/results.js?v=8"></script>
+</body>
+</html>

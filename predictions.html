@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Predictions — TrialAugur</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔮</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/tabulator-tables@5.6.1/dist/css/tabulator.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=1">
+  <script src="js/config.js?v=1"></script>
+</head>
+<body data-page="predictions">
+  <div id="site-header"></div>
+
+  <div class="container">
+    <h1 class="page-title">Baseline predictions</h1>
+    <p class="page-intro">Our ensemble's probability of success for every trial in the
+      cohort, generated from the frozen dossiers and <b>locked before readout</b>
+      (snapshot <span class="mono" id="snap">—</span>). <b>p(success)</b> is the
+      ensemble output; <b>Call</b> applies a 0.5 threshold. These numbers do not
+      change once a trial's readout is public — they are the pre-registered record
+      the <a href="results.html">Results</a> page scores against.
+      <span class="muted">“Interim” marks trials with interim news but no primary
+      readout yet.</span></p>
+
+    <div id="notarization"></div>
+
+    <div class="filters">
+      <input type="search" id="q" placeholder="Search NCT ID, drug, sponsor, condition…" autocomplete="off">
+      <select id="f-phase"><option value="">All phases</option></select>
+      <select id="f-status"><option value="">All</option>
+        <option value="pending">Pending</option>
+        <option value="reported">Reported</option>
+      </select>
+      <select id="f-call"><option value="">All calls</option>
+        <option value="success">Call: success</option>
+        <option value="fail">Call: fail</option>
+      </select>
+      <span class="hint" id="count"></span>
+    </div>
+
+    <div id="grid"></div>
+  </div>
+
+  <div id="site-footer"></div>
+  <script src="https://unpkg.com/tabulator-tables@5.6.1/dist/js/tabulator.min.js"></script>
+  <script src="js/common.js?v=2"></script>
+  <script src="js/predictions.js?v=2"></script>
+</body>
+</html>

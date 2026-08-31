@@ -1,0 +1,168 @@
+{
+ "as_of": "2026-08-30",
+ "locks": {
+  "ours": "2026-07-20 (on-chain, Arbitrum One)",
+  "baselines": "2026-07-27 to 2026-07-29"
+ },
+ "windows": {
+  "full": {
+   "n": 35,
+   "success": 21,
+   "fail": 14,
+   "label": "All prospective readouts (disclosed 1 Jul - 30 Aug 2026)"
+  },
+  "strict": {
+   "n": 21,
+   "success": 13,
+   "fail": 8,
+   "label": "Strictly post-baseline-lock (disclosed after 29 Jul 2026)"
+  },
+  "prelock": {
+   "n": 14,
+   "success": 8,
+   "fail": 6,
+   "label": "Disclosed 1-29 Jul 2026 (before baseline generation)"
+  }
+ },
+ "table_full37": [
+  [
+   "GPT-5 reasoning",
+   "ours",
+   "0.889 (0.747-1.000)",
+   "0.900 (0.741-1.000)",
+   "0.178",
+   "82.9%"
+  ],
+  [
+   "TabPFN-3",
+   "ours",
+   "0.704 (0.507-0.870)",
+   "0.761 (0.555-0.945)",
+   "0.233",
+   "68.6%"
+  ],
+  [
+   "SFT",
+   "ours",
+   "0.575 (0.369-0.780)",
+   "0.668 (0.460-0.866)",
+   "0.282",
+   "60.0%"
+  ],
+  [
+   "Simple-average ensemble",
+   "ours",
+   "0.741 (0.542-0.903)",
+   "0.766 (0.564-0.949)",
+   "0.209",
+   "68.6%"
+  ],
+  [
+   "Rank-average ensemble (locked baseline)",
+   "ours",
+   "0.772 (0.580-0.925)",
+   "0.788 (0.587-0.962)",
+   "0.185",
+   "80.0%"
+  ]
+ ],
+ "table_strict23": [
+  [
+   "Claude Opus 5 zero-shot",
+   "baseline",
+   "0.904 (0.740-1.000)",
+   "0.951 (0.830-1.000)",
+   "0.131",
+   "81.0%"
+  ],
+  [
+   "Claude Opus 4.8 zero-shot",
+   "baseline",
+   "0.942 (0.818-1.000)",
+   "0.966 (0.869-1.000)",
+   "0.135",
+   "81.0%"
+  ],
+  [
+   "GPT-5.6 zero-shot",
+   "baseline",
+   "0.880 (0.685-1.000)",
+   "0.924 (0.783-1.000)",
+   "0.151",
+   "81.0%"
+  ],
+  [
+   "Claude Opus 5 reasoning",
+   "baseline",
+   "0.909 (0.687-1.000)",
+   "0.910 (0.727-1.000)",
+   "0.114",
+   "95.2%"
+  ],
+  [
+   "GPT-5.6 reasoning",
+   "baseline",
+   "0.774 (0.466-1.000)",
+   "0.759 (0.515-1.000)",
+   "0.196",
+   "71.4%"
+  ],
+  [
+   "GPT-5 reasoning",
+   "ours",
+   "0.976 (0.893-1.000)",
+   "0.990 (0.941-1.000)",
+   "0.180",
+   "81.0%"
+  ],
+  [
+   "TabPFN-3",
+   "ours",
+   "0.769 (0.533-0.941)",
+   "0.876 (0.670-0.978)",
+   "0.236",
+   "61.9%"
+  ],
+  [
+   "SFT",
+   "ours",
+   "0.678 (0.422-0.903)",
+   "0.810 (0.548-0.966)",
+   "0.239",
+   "66.7%"
+  ],
+  [
+   "Simple-average ensemble",
+   "ours",
+   "0.827 (0.600-1.000)",
+   "0.903 (0.718-1.000)",
+   "0.195",
+   "71.4%"
+  ],
+  [
+   "Rank-average ensemble (locked baseline)",
+   "ours",
+   "0.856 (0.654-1.000)",
+   "0.925 (0.763-1.000)",
+   "0.155",
+   "85.7%"
+  ]
+ ],
+ "strict_dauc": [
+  [
+   "Claude Opus 5 zero-shot vs locked baseline",
+   "+0.048",
+   "0.71"
+  ],
+  [
+   "GPT-5.6 zero-shot vs locked baseline",
+   "+0.024",
+   "0.88"
+  ],
+  [
+   "Claude Opus 4.8 zero-shot vs locked baseline",
+   "+0.087",
+   "0.45"
+  ]
+ ]
+}
