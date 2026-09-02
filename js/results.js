@@ -28,13 +28,7 @@
       );
     }
 
-    const wF = ev.windows.full, wS = ev.windows.strict, wP = ev.windows.prelock;
-    document.getElementById("eval-intro").innerHTML =
-      `Forecasts locked <b>${ev.locks.ours}</b>; frontier zero-shot baselines generated ` +
-      `<b>${ev.locks.baselines}</b>. Evaluation windows — full prospective: ${wF.n} binary readouts ` +
-      `(${wF.success} success / ${wF.fail} fail); strictly post-baseline-lock: ${wS.n} ` +
-      `(${wS.success}/${wS.fail}); pre-baseline-lock: ${wP.n} (${wP.success}/${wP.fail}). ` +
-      `Per-trial scores for every model: <a href="downloads/trialaugur_prospective_matrix.csv">download the matrix (CSV)</a>.`;
+    const wF = ev.windows.full, wS = ev.windows.strict;
 
     const dauc = ev.strict_dauc
       .map((d) => `${d[0]}: ΔAUC ${d[1]} (paired bootstrap P = ${d[2]})`)
