@@ -1,0 +1,6 @@
+# Withdrawn 2026-08-31 (advisor decision): the 706-trial feature data must never be published.
+# build_site_data.py still regenerates these locally; keep them out of the repo.
+data/trials/
+data/trials.json
+downloads/trialaugur_706_features.xlsx
+downloads/trialaugur_706_features_csv.zip
