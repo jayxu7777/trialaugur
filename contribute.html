@@ -3,88 +3,83 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Contribute — TrialAugur</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔮</text></svg>">
+  <title>Contribute · TrialAugur</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z' fill='%23C96442'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=1">
-  <script src="js/config.js?v=1"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=10">
+  <script src="js/config.js?v=10"></script>
 </head>
 <body data-page="contribute">
   <div id="site-header"></div>
 
-  <div class="container narrow prose">
-    <h1 class="page-title">Contribute predictions</h1>
-    <p class="page-intro">TrialAugur is a FutureX-style live benchmark: the questions
-      are real upcoming trial readouts, so answers cannot exist in any training set.
-      <b>We provide the readouts and the adjudicated labels; the predictions come from
-      the community.</b> Submit while trials are pending, and your model is scored on
-      exactly the trials that were unresolved at your submission time.</p>
+  <section class="wrap pagehead">
+    <div class="eyebrow">Open benchmark</div>
+    <h1>Submit your forecasts</h1>
+    <p class="lede">Every question here is a future trial readout, so the answer cannot be in any training set.
+      We provide the readouts and the adjudicated labels; the forecasts can come from anyone. Submit while trials are
+      pending and you are scored on exactly the trials that were unresolved at your submission time.</p>
+  </section>
 
-    <h2>What to submit</h2>
-    <p>One CSV per model, one row per trial you want scored:</p>
-    <table>
-      <tr><th>Column</th><th>Type</th><th>Description</th></tr>
-      <tr><td><code>nct_id</code></td><td>string</td><td>Trial identifier from the <a href="predictions.html">predictions table</a> (e.g. NCT05499013)</td></tr>
-      <tr><td><code>p_success</code></td><td>float 0–1</td><td>Predicted probability that the trial reads out as a success</td></tr>
-      <tr><td><code>model_name</code></td><td>string</td><td>Short stable name for your method (also the file name)</td></tr>
-      <tr><td><code>generated_at</code></td><td>ISO date</td><td>When the predictions were produced</td></tr>
-    </table>
-    <pre>nct_id,p_success,model_name,generated_at
-NCT06846541,0.82,my-model-v1,2026-09-01
-NCT06109181,0.44,my-model-v1,2026-09-01</pre>
+  <section class="wrap">
+    <div class="doc">
+      <h2>What to submit</h2>
+      <p>One CSV per model, one row per trial you want scored.</p>
+      <div class="scroll"><table class="t">
+        <tr><th>Column</th><th>Type</th><th>Description</th></tr>
+        <tr><td><code>nct_id</code></td><td>string</td><td>Trial identifier from the <a href="predictions.html">predictions table</a>, for example NCT05499013</td></tr>
+        <tr><td><code>p_success</code></td><td>float, 0 to 1</td><td>Predicted probability that the trial reads out as a success</td></tr>
+        <tr><td><code>model_name</code></td><td>string</td><td>Short stable name for your method (also the file name)</td></tr>
+        <tr><td><code>generated_at</code></td><td>ISO date</td><td>When the forecasts were produced</td></tr>
+      </table></div>
+      <pre>nct_id,p_success,model_name,generated_at
+NCT06846541,0.82,my_model_v1,2026-11-01
+NCT06109181,0.44,my_model_v1,2026-11-01</pre>
 
-    <h2>Rules</h2>
-    <ul>
-      <li><b>Lock before readout.</b> Only predictions submitted while a trial is
-        still pending are scored for that trial. The submission timestamp is the
-        lock; for pull requests, the commit time is authoritative.</li>
-      <li><b>No post-hoc edits.</b> You may update predictions for trials that are
-        still pending; predictions for reported trials are frozen at their last
-        pre-readout value.</li>
-      <li><b>Any evidence dated before readout is fair game.</b> Build your
-        features from literature, registries, filings — anything, as long as the
-        information predates the readout.</li>
-      <li><b>Coverage is flexible.</b> Predict any subset of pending trials; metrics
-        are reported alongside the number of trials covered.</li>
-    </ul>
+      <h2>Rules</h2>
+      <ul>
+        <li><b>Lock before readout.</b> Only forecasts submitted while a trial is still pending are scored for that trial.
+          For pull requests the commit time is the lock time.</li>
+        <li><b>No edits after readout.</b> You may update forecasts for pending trials; a trial's forecast is frozen at its
+          last value before readout.</li>
+        <li><b>Any evidence dated before readout is allowed.</b> Literature, registries, filings, web search: anything,
+          as long as it predates the readout.</li>
+        <li><b>Coverage is flexible.</b> Forecast any subset of pending trials; metrics are reported with the number of
+          trials covered.</li>
+      </ul>
 
-    <h2>How to submit</h2>
-    <ul>
-      <li><b>Pull request (preferred):</b> add your CSV as
-        <code>submissions/&lt;model_name&gt;.csv</code> in
-        <a data-site-link="repo" href="#" target="_blank" rel="noopener">the site repository</a>.
-        The commit timestamp becomes your lock time.</li>
-      <li><b>GitHub issue:</b> open an issue on
-        <a data-site-link="issues" href="#" target="_blank" rel="noopener">the tracker</a>
-        with your CSV attached if you prefer not to open a PR.</li>
-    </ul>
+      <h2>How outcomes are labelled</h2>
+      <p>A trial is a <b>success</b> when the disclosure explicitly states that the prespecified primary endpoint was met
+        or that the next development phase will start. It is a <b>failure</b> when the disclosure reports a missed primary
+        endpoint, unacceptable safety or tolerability, or discontinuation of the trial. Disclosures without enough evidence
+        for either label stay <b>unresolved</b> and are not scored. Every label links its primary source.</p>
 
-    <h2>Scoring</h2>
-    <p>After each adjudication round, submissions are evaluated on the trials that
-      were pending at their lock time and have since been adjudicated
-      <b>success</b> or <b>fail</b> (trials under review are excluded until
-      resolved):</p>
-    <ul>
-      <li><b>ROC–AUC</b> and <b>Brier score</b> over covered trials</li>
-      <li><b>Accuracy at the 0.5 threshold</b></li>
-      <li><b>High-confidence accuracy</b> — accuracy on the top 20% / 30% of
-        predictions ranked by |p − 0.5|</li>
-    </ul>
-    <p>Our own locked ensemble (<a href="predictions.html">Predictions</a>) is scored
-      under identical rules and serves as the reference baseline. A public
-      leaderboard will appear here once external submissions arrive.</p>
+      <h2>Scoring</h2>
+      <ul>
+        <li><b>PR AUC</b> with success as the positive class (primary), and ROC AUC</li>
+        <li><b>Specificity and NPV at 0.5</b>: how many failures you catch and how often your failure calls are right</li>
+        <li><b>Brier score</b> and balanced accuracy at 0.5</li>
+      </ul>
+      <p>TrialAugur's locked forecasts and the two zero shot comparators are scored under the same rules and appear on the
+        <a href="results.html">Results</a> page as reference baselines.</p>
 
-    <h2>Questions</h2>
-    <p id="contact-line">Open an issue on
-      <a data-site-link="issues" href="#" target="_blank" rel="noopener">the tracker</a> —
-      including for disagreements with an adjudicated label. Label disputes are
-      re-reviewed against the linked evidence and revisions are recorded.</p>
-  </div>
+      <h2>How to submit</h2>
+      <ul>
+        <li><b>Pull request (preferred):</b> add your CSV as <code>submissions/&lt;model_name&gt;.csv</code> in
+          <a data-site-link="repo" href="#" target="_blank" rel="noopener">the site repository</a>.</li>
+        <li><b>GitHub issue:</b> open an issue on <a data-site-link="issues" href="#" target="_blank" rel="noopener">the tracker</a>
+          with your CSV attached.</li>
+      </ul>
+
+      <h2>Questions and label disputes</h2>
+      <p id="contact-line">Open an issue on <a data-site-link="issues" href="#" target="_blank" rel="noopener">the tracker</a>.
+        Disputed labels are reviewed again against the linked evidence, and revisions are recorded.</p>
+    </div>
+  </section>
 
   <div id="site-footer"></div>
-  <script src="js/common.js?v=1"></script>
+  <script src="js/common.js?v=10"></script>
   <script>
     if (window.SITE.contactEmail) {
       document.getElementById("contact-line").insertAdjacentHTML("beforeend",

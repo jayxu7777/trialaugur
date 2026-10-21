@@ -3,70 +3,90 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Results — TrialAugur</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔮</text></svg>">
+  <title>Results · TrialAugur</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z' fill='%23C96442'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/tabulator-tables@5.6.1/dist/css/tabulator.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=4">
-  <script src="js/config.js?v=1"></script>
+  <link rel="stylesheet" href="css/style.css?v=10">
+  <script src="js/config.js?v=10"></script>
 </head>
 <body data-page="results">
   <div id="site-header"></div>
 
-  <div class="container">
-    <h1 class="page-title">Adjudicated readouts</h1>
+  <section class="wrap pagehead">
+    <div class="eyebrow">Prospective evaluation · data cut 20 Oct 2026</div>
+    <h1>Seventy readouts, every forecast locked in advance</h1>
+    <p class="lede" id="lede">Comparisons are restricted to trials that read out after 29 July 2026, the later of the two
+      comparator commitments, so every evaluated forecast preceded its readout.</p>
+  </section>
 
-    <section class="eval-block" id="eval-block" hidden>
-      <h2 class="eval-title">Model evaluation — prospective windows</h2>
-      <div id="eval-tables"></div>
-      <div id="notarization"></div>
-      <figure class="eval-fig">
-        <img src="img/strict_window_auc_acc.png"
-             alt="Line chart of ROC-AUC (with bootstrap 95% CI whiskers) and accuracy at the 0.5 threshold for ten models on the strict post-lock window of 21 readouts, sorted by ROC-AUC. Locked pipeline models are bold; frontier zero-shot baselines are grey. GPT-5 reasoning (ours) leads at 0.976; the rank-average ensemble reaches 0.856 AUC and 85.7% accuracy.">
-        <figcaption>ROC-AUC and accuracy by model on the strict post-lock window (n = 21). Whiskers: bootstrap 95% CI on ROC-AUC. Bold = locked pipeline; grey = frontier baseline.</figcaption>
-      </figure>
-    </section>
-
-    <h2 class="eval-title">Readout ledger</h2>
-    <div class="filters">
-      <input type="search" id="q" placeholder="Search NCT ID, drug, sponsor, condition…" autocomplete="off">
-      <select id="f-phase"><option value="">All phases</option></select>
-      <select id="f-outcome"><option value="">All outcomes</option>
-        <option value="success">Success</option>
-        <option value="fail">Fail</option>
-      </select>
-      <select id="f-window"><option value="">All windows</option>
-        <option value="post-lock">Post-baseline-lock (strict)</option>
-        <option value="pre-baseline-lock">Pre-baseline-lock (Jul 1-29)</option>
-      </select>
-      <span class="hint" id="count"></span>
+  <section class="wrap section tight">
+    <div class="timeline">
+      <div class="tl"><div class="d">5 to 9 Jul 2026</div><div class="w">TrialCurator collects evidence for all 706 trials</div></div>
+      <div class="tl o"><div class="d">20 Jul 2026</div><div class="w">Three expert forecasts committed on chain</div></div>
+      <div class="tl c"><div class="d">27 Jul 2026</div><div class="w">Claude Opus 5 zero shot committed</div></div>
+      <div class="tl c"><div class="d">29 Jul 2026</div><div class="w">GPT-5.6 zero shot committed</div></div>
+      <div class="tl"><div class="d">30 Jul to 20 Oct 2026</div><div class="w" id="tl-last">70 readouts adjudicated</div></div>
     </div>
+  </section>
 
+  <section class="wrap section">
+    <div class="sechead"><h2>Discrimination and calibration</h2>
+      <p>Success is the positive class. Intervals are 95% percentile bootstrap intervals from 2,000 trial resamples.</p></div>
+    <div class="card scroll"><table class="t" id="metrics"></table></div>
+  </section>
+
+  <section class="wrap section">
+    <div class="sechead"><h2>Failure detection and false alarms</h2>
+      <p>Similar PR AUC point estimates, very different error profiles at the prespecified 0.5 threshold.</p></div>
+    <div class="card"><div id="err-chart"></div>
+      <div class="legend"><span><i style="background:#141413"></i>failures called failure, of 30</span>
+        <span><i style="background:#A8432A"></i>successes called failure, of 40</span></div></div>
+    <div class="card" style="margin-top:20px">
+      <h3 style="font-size:22px;margin-bottom:6px">By development phase</h3>
+      <p class="note" style="margin-top:0">Post hoc and exploratory; subgroups are small.</p>
+      <div class="scroll"><table class="t" id="phase"></table></div>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <div class="sechead"><h2>Readout ledger</h2>
+      <p>Each label links its primary source. Scores are the committed forecasts; outlined scores are incorrect calls at 0.5.</p></div>
+    <div class="filters">
+      <input type="search" id="q" placeholder="Search NCT ID, drug, sponsor, condition, note" autocomplete="off">
+      <select id="f-phase"><option value="">All phases</option></select>
+      <select id="f-outcome"><option value="">All outcomes</option><option value="success">Success</option><option value="fail">Failure</option></select>
+      <span class="count" id="count"></span>
+    </div>
     <div id="grid"></div>
+  </section>
 
-    <section class="eval-block" id="mkt-block" hidden>
-      <h2 class="eval-title">Market reaction</h2>
-      <p class="page-intro" id="mkt-intro"></p>
-      <div id="mkt-table"></div>
+  <section class="wrap section">
+    <div class="sechead"><h2>Market reaction</h2>
+      <p id="mkt-sub">Share price change of the exposed listed company from the 29 July close to the mean close on the
+        readout day and the next two trading days. Exploratory.</p></div>
+    <div class="kpis" id="kpis"></div>
+    <div class="card" style="margin-top:20px"><div id="strip"></div>
+      <p class="note">Each dot is one failed trial with a listed company. Moves beyond ±100% are drawn at the edge.</p></div>
+  </section>
 
-      <h2 class="eval-title">Prediction portfolio backtest</h2>
-      <p class="page-intro" id="pf-intro"></p>
-      <div id="pf-table"></div>
-      <p class="eval-sub" id="pf-note"></p>
+  <section class="wrap section">
+    <div class="sechead"><h2>Hypothetical long short portfolio</h2>
+      <p id="pf-sub"></p></div>
+    <div class="card"><div id="pf-chart"></div><div class="legend" id="pf-legend"></div></div>
+    <div class="card scroll" style="margin-top:20px"><table class="t" id="pf-table"></table></div>
+    <p class="note">Hypothetical and frictionless: no leverage, transaction costs or borrowing fees; equal capital per trial;
+      positions closed in thirds over the readout day and the two following trading days. Research illustration only,
+      not investment advice.</p>
+  </section>
 
-      <p class="eval-sub">Raw close-to-close moves of the most exposed listed company, not
-        market-adjusted. Baseline = last close before the announcement; D0 = announcement day.
-        After-hours announcements show up on D+1 (e.g. selinexor). Trials sharing one corporate
-        disclosure share the same reaction (e.g. the two Sionna programs). Large-cap sponsors
-        dilute single-trial effects. Prices: Yahoo Finance daily closes.</p>
-    </section>
-  </div>
+  <section class="wrap section"><div id="notarization"></div></section>
 
   <div id="site-footer"></div>
   <script src="https://unpkg.com/tabulator-tables@5.6.1/dist/js/tabulator.min.js"></script>
-  <script src="js/common.js?v=2"></script>
-  <script src="js/results.js?v=9"></script>
+  <script src="js/common.js?v=10"></script>
+  <script src="js/results.js?v=10"></script>
 </body>
 </html>

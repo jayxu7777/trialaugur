@@ -1,39 +1,36 @@
 # TrialAugur
 
-A prospective, spin-aware benchmark for clinical-trial readout prediction.
+A prospective benchmark for clinical trial readout prediction.
 
-- **706 unresolved trials**, each with a frozen 53-variable evidence dossier
-  assembled before readout.
-- **Locked baseline predictions** for every trial, timestamped before outcomes exist.
-- **Biweekly adjudication** of new readouts by evidence-based review — every label
-  links its primary source and carries an adjudication note.
-- **Open contribution**: submit your model's predictions while trials are pending
-  (see the Contribute page); scoring uses the same adjudicated labels and rules as
-  our baseline.
+- **706 ongoing trials** with forecasts committed to a public blockchain (Arbitrum One, 20 July 2026) before readout.
+- **70 adjudicated readouts** after 29 July 2026 at the current data cut (20 October 2026): 40 successes, 30 failures.
+- **Prespecified adjudication**: a trial is a success when the disclosure states that the primary endpoint was met or
+  that the next phase will start, and a failure when it reports a missed primary endpoint, unacceptable safety or
+  discontinuation. Everything else stays unresolved. Every label links its primary source.
+- **Open contribution**: submit forecasts for pending trials (see the Contribute page); they are scored on the same labels.
 
-Because every question is a future event, answers cannot appear in any model's
-training data — contamination is impossible by design.
+The site publishes results only: locked forecasts, adjudicated outcomes, evaluation metrics, share price reactions and a
+hypothetical portfolio. Evidence dossiers and feature data are not published.
 
 ## Repository layout
 
 This repository contains only the static website (GitHub Pages, `main` branch root).
 
 ```
-index.html / predictions.html / results.html / contribute.html
+index.html / results.html / predictions.html / contribute.html
 css/          styling
-js/config.js  deployment config — site name, domain, repo (edit here only)
+js/config.js  deployment config: site name, domain, repo, notary, paper (edit here only)
 js/           page logic
 data/         compact JSON consumed by the pages
-downloads/    released artifacts (per-model score matrix)
-submissions/  community prediction CSVs (via pull request)
+downloads/    per trial outcomes and committed scores for the evaluated readouts
+submissions/  community forecast CSVs (via pull request)
 ```
 
 ## Citation
 
-The accompanying manuscript is in preparation; a citation and link will appear
-here and on the site once public.
+The accompanying manuscript is in preparation; a citation and link will appear here and on the site once public.
 
 ## Disclaimer
 
-Research resource only — not medical, clinical, or investment advice. Adjudicated
-labels may be revised as further evidence emerges; revisions are recorded.
+Research resource only. Not medical, clinical or investment advice. Adjudicated labels may be revised as further
+evidence emerges; revisions are recorded.

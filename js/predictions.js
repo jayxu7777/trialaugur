@@ -1,55 +1,61 @@
-// TrialAugur — locked baseline predictions.
+// TrialAugur predictions: the 706 locked forecasts with readout status at the data cut.
 
 (async function () {
-  document.getElementById("snap").textContent = window.SITE.snapshotDate;
-
-  // On-chain proof block (shared renderer in common.js; data in config.js → SITE.notary)
   renderNotarization("notarization");
-
   const rows = await loadJSON("data/predictions.json");
+  rows.forEach((r) => { r.call = r.ens >= 0.5 ? "success" : "fail"; });
 
-  function statusFormatter(cell) {
-    const r = cell.getRow().getData();
-    if (r.status === "reported") return badge("Reported", "reported");
-    return badge("Pending", "pending") +
-      (r.interim ? ' <span class="muted" style="font-size:11px">interim</span>' : "");
-  }
+  const STATUS = {
+    evaluated: ["In evaluation", "success", "read out after 29 Jul and adjudicated"],
+    unresolved: ["Unresolved", "neutral", "read out after 29 Jul, evidence insufficient for a label"],
+    early: ["Read out early", "neutral", "read out by 29 Jul, before the comparator locks"],
+    pending: ["Pending", "cmp", "no primary readout yet"],
+  };
+  const count = (k) => rows.filter((r) => r.status === k).length;
+  document.getElementById("status-strip").innerHTML = ["pending", "evaluated", "unresolved", "early"].map((k) =>
+    `<div class="stat"><div class="v">${count(k)}</div><div class="l"><b>${STATUS[k][0]}</b>: ${STATUS[k][2]}</div></div>`).join("");
 
+  const sc = (c) => `<span class="mono">${f3(c.getValue())}</span>`;
   const table = new Tabulator("#grid", {
     data: rows,
-    layout: "fitColumns",
+    layout: "fitDataStretch",
+    columnDefaults: { headerWordWrap: true },
     height: "72vh",
-    initialSort: [{ column: "score", dir: "desc" }],
+    initialSort: [{ column: "ens", dir: "desc" }],
     columns: [
-      { title: "NCT", field: "nct", width: 130, frozen: true, formatter: nctFormatter },
-      { title: "Drug / intervention", field: "drug", widthGrow: 2.2, minWidth: 240, cssClass: "wrap" },
-      { title: "Sponsor", field: "sponsor", widthGrow: 1.6, minWidth: 200, cssClass: "wrap" },
-      { title: "Phase", field: "phase", width: 110 },
-      { title: "Condition", field: "cond", widthGrow: 2, minWidth: 240, cssClass: "wrap" },
-      { title: "Expected readout*", field: "date", width: 130 },
-      { title: "p(success)", field: "score", width: 110, hozAlign: "right", formatter: scoreFormatter, sorter: "number" },
-      { title: "Call @0.5", field: "call", width: 105, formatter: callFormatter, hozAlign: "center" },
-      { title: "Status", field: "status", width: 140, formatter: statusFormatter },
+      { title: "NCT", field: "nct", width: 128, frozen: true, formatter: (c) => nctLink(c.getValue()) },
+      { title: "Drug", field: "drug", width: 200, cssClass: "wrap" },
+      { title: "Sponsor", field: "sponsor", width: 160, cssClass: "wrap" },
+      { title: "Phase", field: "phase", width: 92 },
+      { title: "Condition", field: "cond", width: 180, cssClass: "wrap" },
+      { title: "Expected readout", field: "date", width: 116, formatter: (c) => `<span class="mono">${c.getValue() || ""}</span>` },
+      { title: "Ensemble", field: "ens", width: 96, hozAlign: "right", sorter: "number",
+        formatter: (c) => `<b class="mono">${f3(c.getValue())}</b>` },
+      { title: "Call", field: "call", width: 96, hozAlign: "center",
+        formatter: (c) => (c.getValue() === "success" ? pill("Success", "success") : pill("Failure", "fail")) },
+      { title: "GPT-5 reasoning", field: "gpt5", width: 104, hozAlign: "right", sorter: "number", formatter: sc },
+      { title: "Embedding", field: "tabpfn", width: 98, hozAlign: "right", sorter: "number", formatter: sc,
+        headerTooltip: "Embedding expert (TabPFN-3)" },
+      { title: "SFT", field: "sft", width: 80, hozAlign: "right", sorter: "number", formatter: sc,
+        headerTooltip: "SFT expert (Qwen3-235B)" },
+      { title: "Status", field: "status", width: 136,
+        formatter: (c) => { const s = STATUS[c.getValue()]; return pill(s[0], s[1]); } },
     ],
   });
 
   table.on("tableBuilt", () => {
-    fillSelect(document.getElementById("f-phase"), rows.map((r) => r.phase));
-    document.getElementById("count").textContent = rows.length + " trials";
-    wireFilters(
-      table,
-      document.getElementById("q"),
-      ["nct", "drug", "sponsor", "cond"],
-      {
-        phase: document.getElementById("f-phase"),
-        status: document.getElementById("f-status"),
-        call: document.getElementById("f-call"),
-      },
-      document.getElementById("count")
-    );
+    const ph = document.getElementById("f-phase"), st = document.getElementById("f-status"),
+      cl = document.getElementById("f-call"), q = document.getElementById("q"), cnt = document.getElementById("count");
+    [...new Set(rows.map((r) => r.phase))].filter(Boolean).sort().forEach((v) => ph.insertAdjacentHTML("beforeend", `<option>${v}</option>`));
+    Object.entries(STATUS).forEach(([k, s]) => st.insertAdjacentHTML("beforeend", `<option value="${k}">${s[0]}</option>`));
+    const apply = () => {
+      const s = q.value.trim().toLowerCase();
+      table.setFilter((r) => (!ph.value || r.phase === ph.value) && (!st.value || r.status === st.value) &&
+        (!cl.value || r.call === cl.value) && (!s || [r.nct, r.drug, r.sponsor, r.cond].join(" ").toLowerCase().includes(s)));
+    };
+    q.addEventListener("input", apply);
+    [ph, st, cl].forEach((e) => e.addEventListener("change", apply));
+    table.on("dataFiltered", (f, rs) => { cnt.textContent = `${rs.length} trials`; });
+    cnt.textContent = `${rows.length} trials`;
   });
-
-  // * footnote under the grid
-  document.getElementById("grid").insertAdjacentHTML("afterend",
-    '<p class="muted" style="font-size:12px;margin-top:8px">* registry primary-completion / expected-readout date at snapshot time; sponsors shift these.</p>');
 })();

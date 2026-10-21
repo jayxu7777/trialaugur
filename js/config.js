@@ -10,7 +10,7 @@
 // ============================================================================
 window.SITE = {
   name: "TrialAugur",
-  tagline: "A prospective, spin-aware benchmark for clinical-trial readout prediction",
+  tagline: "Prospective benchmark for clinical trial readout prediction",
 
   // Public origin of this deployment (no trailing slash). Used only for the
   // citation box and canonical links — all internal links are relative.
@@ -23,7 +23,7 @@ window.SITE = {
   contactEmail: "",
 
   // Date of the current data snapshot / last adjudication round.
-  snapshotDate: "2026-08-30",
+  snapshotDate: "2026-10-20",
 
   // -------- On-chain notarization of the locked predictions --------
   // The per-expert probabilities behind the baseline were timestamped on-chain
@@ -46,8 +46,8 @@ window.SITE = {
   // -------- Paper (PLACEHOLDER — demo text, replace when public) --------
   paper: {
     status: "placeholder", // set to "published" once citation/url are real
-    citation: "Anonymous et al. TrialAugur: prospective, spin-aware benchmarking " +
-              "of clinical-trial outcome prediction. Manuscript in preparation, 2026.",
+    citation: "TrialCurator and TrialAugur: prospective evaluation of AI forecasts " +
+              "of clinical trial outcomes. Manuscript in preparation, 2026.",
     url: "" // DOI or preprint link once available
   }
 };
