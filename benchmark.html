@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Benchmark · TrialAugur</title>
+  <meta name="description" content="The 5,809 ongoing trials of the TrialAugur prospective benchmark, open for forecasts before their readouts.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z' fill='%23C96442'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=11">
+  <script src="js/config.js?v=11"></script>
+</head>
+<body data-page="benchmark">
+  <div id="site-header"></div>
+
+  <section class="wrap pagehead">
+    <div class="eyebrow">Prospective benchmark</div>
+    <h1><span id="b-n">5,809</span> ongoing trials, open for forecasts</h1>
+    <p class="lede">The benchmark covers the eligible ongoing trials of companies listed in the United States, including
+      trials without an announced readout date. TrialAugur's forecasts for every trial were recorded before any outcome was
+      disclosed and stay fixed. The trial list is public so that any method can be scored on the same trials as outcomes
+      are adjudicated.</p>
+    <div class="btns">
+      <a class="btn primary" href="downloads/trialaugur_benchmark_5809_nct_ids.csv" download>Download the NCT IDs (CSV)</a>
+      <a class="btn ghost" href="contribute.html">How to submit forecasts</a>
+    </div>
+  </section>
+
+  <section class="wrap section tight">
+    <div class="grid2">
+      <div class="card">
+        <h3>How the cohort was built</h3>
+        <p class="sub">ClinicalTrials.gov, queried in October 2026</p>
+        <ol class="funnel">
+          <li><b>121,961</b><span>records with an ongoing status: recruiting, not yet recruiting, active and not recruiting, or enrolling by invitation</span></li>
+          <li><b>10,607</b><span>with a lead sponsor or collaborator listed on the NYSE, Nasdaq, NYSE American or Cboe, including American depositary receipts and subsidiaries mapped to their listed parent</span></li>
+          <li><b>8,686</b><span>interventional studies</span></li>
+          <li><b>7,418</b><span>with a specified phase, including early phase 1</span></li>
+          <li><b>6,855</b><span>not enrolling healthy volunteers</span></li>
+          <li><b>5,983</b><span>after removing 872 trials with a disclosed final result or an interim stop, found by web search of the 1,736 trials whose primary completion date had passed or that had posted results</span></li>
+          <li><b>5,809</b><span>after excluding 86 trials whose dossiers listed no intervention, 20 in the development cohort, 25 in the retrospective test cohort and 43 of the initial prospective cohort whose readouts had been disclosed before the forecasts were recorded</span></li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>What is recorded</h3>
+        <ul class="plain">
+          <li><b>Forecasts.</b> The two TrialAugur experts, their rank ensemble and a Claude Opus 5.5 zero shot comparator,
+            recorded before outcome disclosure. Forecast values and evidence dossiers are not published on this site.</li>
+          <li><b>Outcomes.</b> Adjudicated under the same criteria as the initial prospective cohort, each with its supporting
+            source; disclosures that support neither label stay unresolved.</li>
+          <li><b>Scoring.</b> Methods are compared on shared eligible trials by ROC AUC, average precision and classification
+            errors at 0.5, and by Brier score and expected calibration error for probability forecasts, with uncertainty,
+            forecast coverage and the numbers of adjudicated, unresolved and pending trials.</li>
+          <li><b>Your forecasts.</b> Submit for any subset of trials while they are pending; see
+            <a href="contribute.html">Contribute</a>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap section tight">
+    <div class="sechead"><h2>Trial list</h2>
+      <p>Each identifier links to its ClinicalTrials.gov record.</p></div>
+    <div class="filters">
+      <input type="search" id="q" placeholder="Search NCT ID, for example NCT0612" autocomplete="off" inputmode="search">
+      <span class="count" id="count"></span>
+    </div>
+    <div class="card"><div class="ncts" id="ncts"></div></div>
+  </section>
+
+  <div id="site-footer"></div>
+  <script src="js/common.js?v=11"></script>
+  <script src="js/benchmark.js?v=11"></script>
+</body>
+</html>

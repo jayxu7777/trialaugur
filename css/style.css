@@ -77,7 +77,7 @@ h1, h2, h3, .display { font-family: var(--display); font-weight: 400; letter-spa
 
 /* ---------- home hero ---------- */
 .hero .heroin { display: grid; grid-template-columns: 1.35fr 1fr; gap: 56px; align-items: center;
-  padding: 80px 0 84px; }
+  padding-top: 80px; padding-bottom: 84px; }
 .hero h1 { font-size: 58px; line-height: 1.05; letter-spacing: -.02em; }
 
 .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--rc); padding: 26px; }
@@ -137,6 +137,10 @@ table.t .ci { color: var(--faint); font-size: 11.5px; display: block; }
 table.t tr.group td { font-size: 11.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--faint);
   padding-top: 18px; border-top: 0; }
 .scroll { overflow-x: auto; }
+table.t.compact td, table.t.compact th { padding-right: 9px; }
+table.t.compact .num { font-size: 12px; }
+table.t.compact .ci { font-size: 10.5px; }
+table.t.compact th { font-size: 10.5px; letter-spacing: .04em; }
 .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 10px; vertical-align: 1px; }
 .dot.o { background: var(--accent); }
 .dot.c { background: var(--cmp); }
@@ -247,6 +251,45 @@ footer.foot { margin-top: 96px; border-top: 1px solid var(--line); padding: 28px
 footer.foot .row { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
 footer.foot a { color: var(--muted); text-decoration: underline; text-decoration-color: var(--line-strong); }
 
+/* ---------- results page: section nav, card titles, legends ---------- */
+.subnav { position: sticky; top: 68px; z-index: 15; background: rgba(245, 243, 236, .95);
+  backdrop-filter: saturate(1.2) blur(8px); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.subnav .wrap { display: flex; gap: 26px; height: 46px; align-items: center; overflow-x: auto; scrollbar-width: none; }
+.subnav a { color: var(--muted); font-size: 14px; white-space: nowrap; }
+.subnav a:hover { color: var(--fg); text-decoration: none; }
+section[id], .card[id] { scroll-margin-top: 130px; }
+.card h3 { font-size: 21px; margin: 0 0 4px; }
+.card .sub { font-size: 13.5px; color: var(--muted); margin: 0 0 14px; line-height: 1.5; }
+.panelhead { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 6px 0 2px; }
+.hl { color: var(--accent-ink); font-weight: 600; }
+.legend .sq { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+.legend .sq.outline { background: transparent; box-shadow: inset 0 0 0 1.6px var(--fg); }
+.wide { min-width: 900px; }
+.wide.mid { min-width: 720px; }
+.timeline.four { grid-template-columns: repeat(4, 1fr); }
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.grid3 > * { min-width: 0; }
+.card.point { display: flex; flex-direction: column; }
+.card.point p { color: #2f2f2d; font-size: 14.5px; line-height: 1.6; margin: 6px 0 14px; flex: 1; }
+.card.point a { font-size: 14px; }
+.card .takeaway { font-size: 14.5px; color: #2f2f2d; margin: 12px 0 0; line-height: 1.55; }
+.btn.small { padding: 8px 14px; font-size: 14px; }
+
+/* ---------- benchmark page ---------- */
+.funnel { list-style: none; margin: 4px 0 0; padding: 0; }
+.funnel li { display: grid; grid-template-columns: 96px 1fr; gap: 14px; padding: 11px 0; border-top: 1px solid var(--line);
+  font-size: 14px; line-height: 1.5; }
+.funnel li:first-child { border-top: 0; }
+.funnel b { font-family: var(--display); font-weight: 400; font-size: 22px; line-height: 1.1; }
+.funnel span { color: var(--muted); }
+.funnel li:last-child b { color: var(--accent); }
+ul.plain { list-style: none; padding: 0; margin: 10px 0 0; }
+ul.plain li { padding: 11px 0; border-top: 1px solid var(--line); font-size: 14.5px; color: #2f2f2d; line-height: 1.55; }
+ul.plain li:first-child { border-top: 0; }
+.ncts { display: grid; grid-template-columns: repeat(auto-fill, minmax(124px, 1fr)); gap: 4px 14px; max-height: 560px;
+  overflow-y: auto; font-family: var(--mono); font-size: 13px; }
+.ncts a { padding: 3px 0; }
+
 /* ---------- responsive ---------- */
 @media (max-width: 960px) {
   .hero .heroin, .grid2, .grid2.even, .callout { grid-template-columns: 1fr; gap: 32px; }
@@ -254,8 +297,8 @@ footer.foot a { color: var(--muted); text-decoration: underline; text-decoration
   .stats { grid-template-columns: repeat(2, 1fr); }
   .stat:nth-child(3) { padding-left: 0; border-left: 0; }
   .stat:nth-child(n+3) { border-top: 1px solid var(--line); }
-  .steps, .kpis { grid-template-columns: 1fr; gap: 28px; }
-  .timeline { grid-template-columns: 1fr; }
+  .steps, .kpis, .grid3 { grid-template-columns: 1fr; gap: 20px; }
+  .timeline, .timeline.four { grid-template-columns: 1fr; }
   .timeline::before { left: 5px; right: auto; top: 0; bottom: 0; width: 1px; height: auto; }
   .tl { padding: 0 0 18px 28px; }
   .tl::before { top: 4px; }
@@ -269,7 +312,7 @@ footer.foot a { color: var(--muted); text-decoration: underline; text-decoration
   .nav .cta { display: none; }
   .menu-btn { display: block; margin-left: auto; }
   .navin { gap: 16px; }
-  .hero .heroin { padding: 48px 0; }
+  .hero .heroin { padding-top: 48px; padding-bottom: 48px; }
   .hero h1, .pagehead h1 { font-size: 36px; }
   .lede { font-size: 17px; }
   .stat .v { font-size: 34px; }
@@ -279,4 +322,8 @@ footer.foot a { color: var(--muted); text-decoration: underline; text-decoration
   .callout .big { font-size: 64px; }
   .filters input[type=search] { min-width: 0; width: 100%; max-width: none; }
   .section { padding-top: 64px; }
+  .subnav { top: 68px; }
+  .funnel li { grid-template-columns: 78px 1fr; }
 }
+
+.card a.more { display: inline-block; margin-top: 10px; font-size: 14px; }

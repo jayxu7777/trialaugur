@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TrialAugur</title>
-  <meta name="description" content="Prospective benchmark for clinical trial readout prediction: forecasts committed on chain before readout, outcomes adjudicated under prespecified rules.">
+  <meta name="description" content="Prospective benchmark for clinical trial outcome forecasts: forecasts recorded before outcome disclosure, outcomes adjudicated under prespecified rules.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2l2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2z' fill='%23C96442'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=10">
-  <script src="js/config.js?v=10"></script>
+  <link rel="stylesheet" href="css/style.css?v=11">
+  <script src="js/config.js?v=11"></script>
 </head>
 <body data-page="home">
   <div id="site-header"></div>
@@ -18,59 +18,91 @@
   <section class="hero"><div class="wrap heroin">
     <div>
       <div class="eyebrow">Prospective benchmark · data cut 20 Oct 2026</div>
-      <h1>Forecasting clinical trial readouts, locked before the outcome exists.</h1>
-      <p class="lede">TrialCurator builds an evidence dossier for each trial. TrialAugur scores it and commits the
-        forecast to a public blockchain. Each readout is then adjudicated under prespecified rules, not press release framing.</p>
+      <h1>Forecasting clinical trial outcomes before the results are disclosed.</h1>
+      <p class="lede">TrialCurator turns a ClinicalTrials.gov identifier into a standardized evidence dossier. TrialAugur
+        forecasts the trial outcome from that dossier. Forecasts are recorded before disclosure and scored against
+        readouts adjudicated under prespecified rules, not press release framing.</p>
       <div class="btns">
-        <a class="btn primary" href="results.html">See the prospective results</a>
-        <a class="btn ghost" href="predictions.html">Browse all 706 forecasts</a>
+        <a class="btn primary" href="results.html">See the results</a>
+        <a class="btn ghost" href="benchmark.html">Browse the 5,809 benchmark trials</a>
       </div>
     </div>
     <div class="card case" id="case"></div>
   </div></section>
 
   <section class="wrap stats">
-    <div class="stat"><div class="v" id="s-cohort">706</div><div class="l">ongoing trials with forecasts committed on chain</div></div>
-    <div class="stat"><div class="v" id="s-eval">70</div><div class="l" id="s-eval-l">readouts after 29 Jul 2026 adjudicated</div></div>
-    <div class="stat"><div class="v" id="s-prauc">0.862</div><div class="l" id="s-prauc-l">PR AUC of the simple rank ensemble</div></div>
-    <div class="stat"><div class="v">20 Jul</div><div class="l">expert forecasts committed on Arbitrum One</div></div>
+    <div class="stat"><div class="v" id="s-cohort">694</div><div class="l">ongoing trials in the initial prospective cohort, assembled 5 Jul 2026</div></div>
+    <div class="stat"><div class="v" id="s-eval">69</div><div class="l" id="s-eval-l">readouts after 29 Jul 2026 adjudicated</div></div>
+    <div class="stat"><div class="v" id="s-roc">0.834</div><div class="l" id="s-roc-l">ROC AUC of the rank ensemble</div></div>
+    <div class="stat"><div class="v" id="s-bench">5,809</div><div class="l">ongoing trials in the prospective benchmark, forecasts recorded before disclosure</div></div>
   </section>
 
   <section class="wrap section">
     <div class="sechead"><h2>Leaderboard</h2>
-      <p id="lb-sub">PR AUC with 95% bootstrap intervals; success is the positive class. Dotted line marks the success rate.</p></div>
+      <p id="lb-sub">ROC AUC with 95% bootstrap intervals; success is the positive class.</p></div>
     <div class="grid2">
       <div class="card"><div id="lb-chart"></div>
-        <div class="legend"><span><span class="dot o"></span>TrialAugur</span><span><span class="dot c"></span>Zero shot comparator</span></div></div>
+        <div class="legend" id="lb-legend"></div></div>
       <div class="card scroll"><table class="t" id="lb-table"></table>
-        <p class="note">Failures caught: failures called failure. False alarms: successes called failure. Both at the prespecified 0.5 threshold.
-          <a href="results.html">Full metrics →</a></p></div>
+        <p class="note">Classification at 0.5: rank score for the ensemble, success probability for the other methods.
+          Failures identified: unsuccessful trials classified as failures. False alarms: successful trials classified as
+          failures. <a href="results.html#prospective">Full metrics →</a></p></div>
+    </div>
+  </section>
+
+  <section class="wrap section">
+    <div class="sechead"><h2>What the prospective comparison shows</h2>
+      <p>Three panels of the prospective evaluation; all panels and the full metrics are on the
+        <a href="results.html#prospective">Results</a> page.</p></div>
+    <div class="card">
+      <h3>Failures identified and false alarms at 0.5</h3>
+      <p class="sub">Filled bars are correct predictions and open bars incorrect ones; labels give correct out of total</p>
+      <div id="hl-cls"></div>
+      <p class="takeaway" id="hl-cls-t"></p>
+    </div>
+    <div class="grid2 even" style="margin-top:20px">
+      <div class="card">
+        <h3>Failures without a public warning</h3>
+        <p class="sub" id="hl-sig-sub"></p>
+        <div id="hl-sig"></div>
+        <p class="takeaway" id="hl-sig-t"></p>
+        <a class="more" href="results.html#signals">Public negative signals →</a>
+      </div>
+      <div class="card">
+        <h3>Share price responses to failures</h3>
+        <p class="sub">Cumulative abnormal return over the first three trading sessions, by forecast agreement</p>
+        <div id="hl-car"></div>
+        <p class="takeaway" id="hl-car-t"></p>
+        <a class="more" href="results.html#market">Share price responses →</a>
+      </div>
     </div>
   </section>
 
   <section class="wrap section">
     <div class="sechead"><h2>How it works</h2></div>
     <div class="steps">
-      <div class="step"><div class="n">01</div><h3>Collect</h3><div class="who">TrialCurator, evidence agent</div>
-        <p>Turns a ClinicalTrials.gov identifier into a fixed schema dossier of 33 variables drawn from ClinicalTrials.gov,
-          PubMed, Open Targets, openFDA, prespecified web sources and company disclosures. Missing evidence stays marked as missing.</p></div>
+      <div class="step"><div class="n">01</div><h3>Curate</h3><div class="who">TrialCurator, evidence agent</div>
+        <p>Uses an NCT ID to retrieve and extract evidence from ClinicalTrials.gov, PubMed, Open Targets, openFDA,
+          prespecified web sources and company disclosures into 28 fields. A second stage standardizes or condenses
+          eight fields and keeps the other 20 without semantic rewriting. Evidence that cannot be retrieved is recorded
+          as missing.</p></div>
       <div class="step"><div class="n">02</div><h3>Forecast</h3><div class="who">TrialAugur, predictor</div>
-        <p>A GPT-5 reasoning expert, an embedding expert (TabPFN-3) and a fine tuned Qwen3-235B expert each estimate the
-          probability of success. A prespecified simple rank ensemble averages their percentile ranks.</p></div>
-      <div class="step"><div class="n">03</div><h3>Adjudicate</h3><div class="who">Prespecified evidentiary rules</div>
-        <p>Success needs an explicit statement that the primary endpoint was met or that the next phase will start. A missed
-          primary endpoint, unacceptable safety or discontinuation is failure. Anything less stays unresolved.</p></div>
+        <p>A GPT-5 reasoning expert estimates a base rate for the development transition and updates it with the dossier
+          evidence. An embedding expert classifies text embeddings of the evidence with TabPFN-3, using 1,800 labelled
+          historical trials as reference examples. The rank ensemble averages the two experts' percentile ranks.</p></div>
+      <div class="step"><div class="n">03</div><h3>Adjudicate</h3><div class="who">Prespecified outcome criteria</div>
+        <p>Success requires an explicit report that the prespecified primary endpoint was met, or an explicit
+          announcement that the next clinical phase has started. A missed primary endpoint without such an announcement,
+          unacceptable safety or tolerability, or trial discontinuation is failure. Anything else stays unresolved.</p></div>
     </div>
   </section>
 
   <section class="wrap section">
     <div class="callout">
-      <div class="big">31%<small>of 83 failed trials were announced in a positive tone</small></div>
+      <div class="big" id="fr-big">13.8%<small id="fr-small">of 58 unsuccessful trials were disclosed with a favorable dominant message</small></div>
       <div>
         <h3>Why labels cannot come from press releases</h3>
-        <p>Among 83 failures that read out between June 2025 and March 2026, 26 were framed positively. The most common
-          pattern was a missed primary endpoint with another finding made the headline, followed by emphasis on a subgroup,
-          on response rates or biomarkers, or on secondary endpoints.</p>
+        <p id="fr-text"></p>
         <p>Every label on this site links its primary source, and disclosures without enough evidence remain unresolved.</p>
       </div>
     </div>
@@ -83,12 +115,12 @@
         <div class="cite"><span id="paper-cite"></span><span class="tag" id="paper-tag">In preparation</span></div>
         <p class="note" id="paper-note">The citation and link will appear here once the manuscript is public.</p>
       </div>
-      <a class="btn ghost" href="downloads/trialaugur_prospective_matrix.csv" download>Download results (CSV)</a>
+      <a class="btn ghost" href="downloads/trialaugur_prospective_69.csv" download>Download the 69 readouts (CSV)</a>
     </div>
   </section>
 
   <div id="site-footer"></div>
-  <script src="js/common.js?v=10"></script>
-  <script src="js/home.js?v=10"></script>
+  <script src="js/common.js?v=11"></script>
+  <script src="js/home.js?v=11"></script>
 </body>
 </html>

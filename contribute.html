@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=10">
-  <script src="js/config.js?v=10"></script>
+  <link rel="stylesheet" href="css/style.css?v=11">
+  <script src="js/config.js?v=11"></script>
 </head>
 <body data-page="contribute">
   <div id="site-header"></div>
@@ -18,8 +18,8 @@
     <div class="eyebrow">Open benchmark</div>
     <h1>Submit your forecasts</h1>
     <p class="lede">Every question here is a future trial readout, so the answer cannot be in any training set.
-      We provide the readouts and the adjudicated labels; the forecasts can come from anyone. Submit while trials are
-      pending and you are scored on exactly the trials that were unresolved at your submission time.</p>
+      Forecast any of the <a href="benchmark.html">5,809 benchmark trials</a> while it is pending. Outcomes are
+      adjudicated under the rules below, and each method is scored on the trials it forecast before their readouts.</p>
   </section>
 
   <section class="wrap">
@@ -28,19 +28,19 @@
       <p>One CSV per model, one row per trial you want scored.</p>
       <div class="scroll"><table class="t">
         <tr><th>Column</th><th>Type</th><th>Description</th></tr>
-        <tr><td><code>nct_id</code></td><td>string</td><td>Trial identifier from the <a href="predictions.html">predictions table</a>, for example NCT05499013</td></tr>
+        <tr><td><code>nct_id</code></td><td>string</td><td>Trial identifier from the <a href="benchmark.html">benchmark list</a>, for example NCT00223145</td></tr>
         <tr><td><code>p_success</code></td><td>float, 0 to 1</td><td>Predicted probability that the trial reads out as a success</td></tr>
         <tr><td><code>model_name</code></td><td>string</td><td>Short stable name for your method (also the file name)</td></tr>
         <tr><td><code>generated_at</code></td><td>ISO date</td><td>When the forecasts were produced</td></tr>
       </table></div>
       <pre>nct_id,p_success,model_name,generated_at
-NCT06846541,0.82,my_model_v1,2026-11-01
-NCT06109181,0.44,my_model_v1,2026-11-01</pre>
+NCT00223145,0.82,my_model_v1,2026-11-01
+NCT00223171,0.44,my_model_v1,2026-11-01</pre>
 
       <h2>Rules</h2>
       <ul>
-        <li><b>Lock before readout.</b> Only forecasts submitted while a trial is still pending are scored for that trial.
-          For pull requests the commit time is the lock time.</li>
+        <li><b>Record before readout.</b> Only forecasts submitted while a trial is still pending are scored for that trial.
+          The submission timestamp is the time the forecast was recorded; for pull requests this is the commit time.</li>
         <li><b>No edits after readout.</b> You may update forecasts for pending trials; a trial's forecast is frozen at its
           last value before readout.</li>
         <li><b>Any evidence dated before readout is allowed.</b> Literature, registries, filings, web search: anything,
@@ -50,19 +50,24 @@ NCT06109181,0.44,my_model_v1,2026-11-01</pre>
       </ul>
 
       <h2>How outcomes are labelled</h2>
-      <p>A trial is a <b>success</b> when the disclosure explicitly states that the prespecified primary endpoint was met
-        or that the next development phase will start. It is a <b>failure</b> when the disclosure reports a missed primary
-        endpoint, unacceptable safety or tolerability, or discontinuation of the trial. Disclosures without enough evidence
-        for either label stay <b>unresolved</b> and are not scored. Every label links its primary source.</p>
+      <p>A trial is a <b>success</b> when the disclosure explicitly reports that the prespecified primary endpoint was met,
+        or clearly announces the start of the next development phase. A missed primary endpoint is a <b>failure</b> unless
+        the sponsor explicitly announces the start of the next phase; general development plans, intentions to discuss
+        development with regulators and conditional statements do not count as advancement. Unacceptable safety or
+        tolerability and discontinuation of the trial are also failures. Disclosures that support neither label stay
+        <b>unresolved</b> and are not scored. Every label links its primary source, and sponsor framing does not change
+        the label.</p>
 
       <h2>Scoring</h2>
       <ul>
-        <li><b>PR AUC</b> with success as the positive class (primary), and ROC AUC</li>
-        <li><b>Specificity and NPV at 0.5</b>: how many failures you catch and how often your failure calls are right</li>
-        <li><b>Brier score</b> and balanced accuracy at 0.5</li>
+        <li><b>ROC AUC and average precision (AP)</b>, with success as the positive class</li>
+        <li><b>Classification errors at 0.5</b>: failures identified (specificity and NPV) and successful trials
+          classified as failures</li>
+        <li><b>Brier score and expected calibration error</b> for probability forecasts</li>
       </ul>
-      <p>TrialAugur's locked forecasts and the two zero shot comparators are scored under the same rules and appear on the
-        <a href="results.html">Results</a> page as reference baselines.</p>
+      <p>Methods are compared on shared eligible trials, with uncertainty estimates, forecast coverage and the numbers of
+        adjudicated, unresolved and pending trials. TrialAugur's recorded forecasts are scored under the same rules; see
+        the <a href="results.html">Results</a> page for the initial prospective comparison.</p>
 
       <h2>How to submit</h2>
       <ul>
@@ -79,7 +84,7 @@ NCT06109181,0.44,my_model_v1,2026-11-01</pre>
   </section>
 
   <div id="site-footer"></div>
-  <script src="js/common.js?v=10"></script>
+  <script src="js/common.js?v=11"></script>
   <script>
     if (window.SITE.contactEmail) {
       document.getElementById("contact-line").insertAdjacentHTML("beforeend",

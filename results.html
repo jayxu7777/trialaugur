@@ -9,84 +9,309 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/tabulator-tables@5.6.1/dist/css/tabulator.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=10">
-  <script src="js/config.js?v=10"></script>
+  <link rel="stylesheet" href="css/style.css?v=11">
+  <script src="js/config.js?v=11"></script>
 </head>
 <body data-page="results">
   <div id="site-header"></div>
 
   <section class="wrap pagehead">
-    <div class="eyebrow">Prospective evaluation · data cut 20 Oct 2026</div>
-    <h1>Seventy readouts, every forecast locked in advance</h1>
-    <p class="lede" id="lede">Comparisons are restricted to trials that read out after 29 July 2026, the later of the two
-      comparator commitments, so every evaluated forecast preceded its readout.</p>
+    <div class="eyebrow">Results · data cut 20 Oct 2026</div>
+    <h1>Evidence, forecasts and adjudicated outcomes</h1>
+    <p class="lede">The values on this page are those of the figures and tables of the manuscript. Retrospective results
+      come from trials excluded from model development; prospective results from forecasts recorded before the outcome
+      was disclosed.</p>
   </section>
 
-  <section class="wrap section tight">
-    <div class="timeline">
-      <div class="tl"><div class="d">5 to 9 Jul 2026</div><div class="w">TrialCurator collects evidence for all 706 trials</div></div>
-      <div class="tl o"><div class="d">20 Jul 2026</div><div class="w">Three expert forecasts committed on chain</div></div>
-      <div class="tl c"><div class="d">27 Jul 2026</div><div class="w">Claude Opus 5 zero shot committed</div></div>
-      <div class="tl c"><div class="d">29 Jul 2026</div><div class="w">GPT-5.6 zero shot committed</div></div>
-      <div class="tl"><div class="d">30 Jul to 20 Oct 2026</div><div class="w" id="tl-last">70 readouts adjudicated</div></div>
+  <nav class="subnav" aria-label="Sections"><div class="wrap">
+    <a href="#evidence">Evidence</a><a href="#retrospective">Retrospective</a><a href="#prospective">Prospective</a>
+    <a href="#bytrial">By trial</a><a href="#market">Share prices</a><a href="#signals">Public signals</a>
+    <a href="#portfolio">Portfolio</a><a href="#discussion">Discussion</a><a href="#readouts">Readouts</a>
+  </div></nav>
+
+  <!-- ===================================================== evidence construction -->
+  <section class="wrap section" id="evidence">
+    <div class="eyebrow">TrialCurator</div>
+    <div class="sechead"><h2>Evidence construction</h2>
+      <p>TrialCurator dossiers compared with a human curator, with ClinicalTrials.gov MeSH terms and with ChEMBL.</p></div>
+    <div class="grid2 even">
+      <div class="card">
+        <h3>Human curation</h3>
+        <p class="sub" id="hc-sub"></p>
+        <div class="scroll"><table class="t" id="hc-table"></table></div>
+        <p class="note">A PhD student in biostatistics, blinded to TrialCurator's outputs, completed the same dossier
+          schema using web searches. Registry derived fields were not compared; the comparison covers the fields that
+          require biological interpretation.</p>
+      </div>
+      <div class="card">
+        <h3>Curation cost per trial</h3>
+        <p class="sub">20 randomly sampled trials</p>
+        <div id="cost-chart"></div>
+        <p class="note" id="cost-note"></p>
+      </div>
     </div>
-  </section>
-
-  <section class="wrap section">
-    <div class="sechead"><h2>Discrimination and calibration</h2>
-      <p>Success is the positive class. Intervals are 95% percentile bootstrap intervals from 2,000 trial resamples.</p></div>
-    <div class="card scroll"><table class="t" id="metrics"></table></div>
-  </section>
-
-  <section class="wrap section">
-    <div class="sechead"><h2>Failure detection and false alarms</h2>
-      <p>Similar PR AUC point estimates, very different error profiles at the prespecified 0.5 threshold.</p></div>
-    <div class="card"><div id="err-chart"></div>
-      <div class="legend"><span><i style="background:#141413"></i>failures called failure, of 30</span>
-        <span><i style="background:#A8432A"></i>successes called failure, of 40</span></div></div>
+    <div class="grid2 even" style="margin-top:20px">
+      <div class="card">
+        <h3>MOA and target gene coverage</h3>
+        <p class="sub" id="ch-sub"></p>
+        <div id="ch-chart"></div>
+        <div class="legend"><span><i style="background:#C55A30"></i>TrialCurator</span><span><i style="background:#B9B4A6"></i>ChEMBL</span></div>
+        <p class="note" id="ch-note"></p>
+      </div>
+      <div class="card">
+        <h3>Differing target genes and molecular targets</h3>
+        <p class="sub">Drug records in which TrialCurator records target genes absent from the ChEMBL annotation</p>
+        <div class="scroll"><table class="t" id="dg-table"></table></div>
+        <h3 style="margin-top:30px">Disease annotation</h3>
+        <p class="sub" id="mesh-sub"></p>
+        <div id="mesh-chart"></div>
+        <p class="note">Discordant pairs were reviewed for how well each MeSH term represented the registered conditions.</p>
+      </div>
+    </div>
     <div class="card" style="margin-top:20px">
-      <h3 style="font-size:22px;margin-bottom:6px">By development phase</h3>
-      <p class="note" style="margin-top:0">Post hoc and exploratory; subgroups are small.</p>
-      <div class="scroll"><table class="t" id="phase"></table></div>
+      <h3>Positive framing of unsuccessful trials</h3>
+      <p class="sub" id="fr-sub"></p>
+      <div class="grid2 even" style="align-items:center">
+        <div id="fr-stack"></div>
+        <div id="fr-patterns"></div>
+      </div>
+      <p class="note">Framing was judged by whether the dominant message of the disclosure (title, subtitle and conclusion)
+        was favorable. Positive framing did not necessarily correspond to success under the outcome criteria. For example,
+        the final update of the phase 1b study of NXP800 in platinum resistant ovarian cancer (NCT05226507) announced that
+        development in ovarian cancer would not be pursued, while presenting two unconfirmed partial responses and three
+        cases of stable disease among 13 evaluable patients as evidence of biological activity.</p>
     </div>
   </section>
 
-  <section class="wrap section">
+  <!-- ===================================================== development and retrospective evaluation -->
+  <section class="wrap section" id="retrospective">
+    <div class="eyebrow">TrialAugur · development and retrospective test</div>
+    <div class="sechead"><h2>Development and retrospective evaluation</h2>
+      <p id="retro-sub"></p></div>
+    <div class="grid2 even">
+      <div class="card">
+        <h3>Classifier selection for the embedding expert</h3>
+        <p class="sub">ROC AUC in nested cross validation grouped by primary investigational drug, 1,800 development trials</p>
+        <div id="clf-chart"></div>
+        <p class="note">Dot, mean of five outer folds; whiskers, one standard deviation; small circles, individual folds.
+          TabPFN-3 was selected.</p>
+      </div>
+      <div class="card">
+        <h3>Effect of the evidence dossier on the reasoning expert</h3>
+        <p class="sub" id="dos-sub"></p>
+        <div id="dos-chart"></div>
+        <p class="note" id="dos-note"></p>
+      </div>
+    </div>
+    <div class="grid2 even" style="margin-top:20px">
+      <div class="card">
+        <h3>Discrimination in the retrospective test cohort</h3>
+        <p class="sub" id="test-sub"></p>
+        <div id="test-roc"></div>
+        <div id="test-ap" style="margin-top:6px"></div>
+        <p class="note">Intervals are 95% percentile bootstrap intervals from 2,000 resamples of trials. Dotted line in the AP
+          panel: success rate.</p>
+      </div>
+      <div class="card">
+        <h3>Precision and recall in the test cohort</h3>
+        <p class="sub">Success is the positive class</p>
+        <div id="pr-chart"></div>
+        <div class="legend" id="pr-legend"></div>
+      </div>
+    </div>
+    <div class="card scroll" style="margin-top:20px">
+      <h3>Discrimination across cohorts</h3>
+      <p class="sub">Validation (150 trials), retrospective test (143) and initial prospective comparison (69)</p>
+      <table class="t" id="coh-table"></table>
+      <p class="note" id="coh-note"></p>
+    </div>
+  </section>
+
+  <!-- ===================================================== prospective evaluation -->
+  <section class="wrap section" id="prospective">
+    <div class="eyebrow">Prospective evaluation · initial cohort of 694 trials</div>
+    <div class="sechead"><h2 id="pro-h2">69 adjudicated readouts</h2>
+      <p id="pro-sub"></p></div>
+    <div class="timeline four" id="timeline"></div>
+    <div class="grid2 even" style="margin-top:44px">
+      <div class="card"><h3>Average precision</h3><p class="sub">Dotted line: success rate</p><div id="pro-ap"></div></div>
+      <div class="card"><h3>ROC AUC</h3><p class="sub">Dotted line: 0.5</p><div id="pro-roc"></div></div>
+    </div>
+    <div class="card" style="margin-top:20px">
+      <h3>Classification at 0.5</h3>
+      <p class="sub">Rank score for the ensemble and success probability for the other methods, by adjudicated outcome.
+        Filled bars are correct predictions and open bars incorrect ones; labels give correct out of total.</p>
+      <div id="cls-chart"></div>
+    </div>
+    <div class="card scroll" style="margin-top:20px">
+      <h3>All metrics</h3>
+      <p class="sub">Success is the positive class. Intervals are 95% percentile bootstrap intervals from 2,000 trial resamples.</p>
+      <table class="t compact" id="metrics"></table>
+    </div>
+    <div class="card" style="margin-top:20px" id="phase">
+      <h3>Discrimination by development phase</h3>
+      <p class="sub">Exploratory; ROC AUC with 95% bootstrap intervals. Dotted line: 0.5</p>
+      <div class="grid2 even">
+        <div><div class="panelhead" id="ph-h0"></div><div id="ph-0"></div></div>
+        <div><div class="panelhead" id="ph-h1"></div><div id="ph-1"></div></div>
+      </div>
+      <p class="note">Phase 3 comprised 39 trials (26 successes); the other phases, 30 trials (14 successes) spanning phases 1,
+        1/2, 2 and 2/3. Among trials registered in a single phase, 0 of 1 phase 1 trial, 10 of 24 phase 2 trials (41.7%)
+        and 26 of 39 phase 3 trials (66.7%) met the success criterion. For historical industry context, BIO estimated
+        programme advancement rates of 52.0% from phase 1 to phase 2, 28.9% from phase 2 to phase 3 and 57.8% from phase 3
+        to regulatory filing during 2011 to 2020.</p>
+    </div>
+  </section>
+
+  <!-- ===================================================== by trial -->
+  <section class="wrap section" id="bytrial">
+    <div class="sechead"><h2>Forecast scores and abnormal returns by trial</h2>
+      <p>Each column is one adjudicated trial. Hover a cell for the trial and its score.</p></div>
+    <div class="card">
+      <div class="scroll"><div id="heat" class="wide"></div></div>
+      <div class="legend" id="heat-legend"></div>
+      <p class="note">Cells show the recorded score: rank score for the ensemble, success probability for the other
+        methods. Warm colours are failure predictions and cool colours success predictions, so warm cells are correct among
+        failures and cool cells among successes; outlined cells are incorrect. Errors gives the incorrect predictions per
+        method. Bars give the cumulative abnormal return (CAR) over the first three trading sessions after the first
+        eligible disclosure, for the 50 announcements in the share price analysis; CARs of +180% and +157% are drawn at
+        100%.</p>
+    </div>
+  </section>
+
+  <!-- ===================================================== share price responses -->
+  <section class="wrap section" id="market">
+    <div class="sechead"><h2>Share price responses</h2>
+      <p id="mkt-sub"></p></div>
+    <div class="grid2">
+      <div class="card">
+        <h3>Abnormal returns of unsuccessful trials by forecast agreement</h3>
+        <p class="sub">CAR over sessions 0 to 2; horizontal lines mark group medians</p>
+        <div id="car-chart"></div>
+      </div>
+      <div class="card scroll">
+        <h3>Median CAR by group and window</h3>
+        <p class="sub">Exploratory; percentages</p>
+        <table class="t" id="car-table"></table>
+        <p class="note" id="car-note"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================== public negative signals -->
+  <section class="wrap section" id="signals">
+    <div class="sechead"><h2>Public negative signals before the forecasts</h2>
+      <p id="sig-sub"></p></div>
+    <div class="grid2 even">
+      <div class="card">
+        <h3>Failures identified, by public signal</h3>
+        <p class="sub">Share of the failures classified as failures at 0.5</p>
+        <div id="sig-chart"></div>
+      </div>
+      <div class="card scroll">
+        <h3>Signals by forecast agreement</h3>
+        <p class="sub" id="sig-tab-sub"></p>
+        <table class="t" id="sig-table"></table>
+        <p class="note" id="sig-cite"></p>
+      </div>
+    </div>
+    <p class="note">These findings link many correct comparator forecasts to previously disclosed negative signals and
+      identify failures prioritized by the ensemble without such a signal. They do not establish investor consensus or
+      show that a cited signal caused a forecast.</p>
+  </section>
+
+  <!-- ===================================================== portfolio -->
+  <section class="wrap section" id="portfolio">
+    <div class="sechead"><h2>Exploratory portfolio simulation</h2>
+      <p id="pf-sub"></p></div>
+    <div class="grid2 even">
+      <div class="card">
+        <h3>Net returns of hypothetical long and short portfolios</h3>
+        <p class="sub" id="pf-bars-sub"></p>
+        <div id="pf-bars"></div>
+      </div>
+      <div class="card scroll">
+        <h3>Paired return differences</h3>
+        <p class="sub">Rank ensemble minus each LLM comparator, percentage points with 95% bootstrap intervals</p>
+        <table class="t" id="pf-paired"></table>
+      </div>
+    </div>
+    <div class="card" style="margin-top:20px">
+      <h3 id="pf-curve-h">Cumulative net returns</h3>
+      <div class="scroll"><div id="pf-chart" class="wide mid"></div></div><div class="legend" id="pf-legend"></div>
+    </div>
+    <div class="card scroll" style="margin-top:20px">
+      <h3>Returns and decomposition</h3>
+      <p class="sub">Percent, or percentage points for the contributions</p>
+      <table class="t compact" id="pf-table"></table>
+    </div>
+    <p class="note">Hypothetical portfolio for research illustration only, not investment advice. Each method allocated
+      equal capital to every company; financial returns depend on the size and direction of price moves and on the exposure
+      assigned to each company, so their ordering can differ from that of discrimination.</p>
+  </section>
+
+  <!-- ===================================================== discussion -->
+  <section class="wrap section" id="discussion">
+    <div class="eyebrow">From the manuscript</div>
+    <div class="sechead"><h2>Discussion</h2>
+      <p>The main points of the Discussion of the manuscript, with links to the results above.</p></div>
+    <div class="grid3">
+      <div class="card point"><h3>Evidence and labels</h3>
+        <p>With the same GPT-5 model, the full TrialCurator dossier improved discrimination over registry information
+          alone, and LLM costs stayed below US$1 per trial. Because some disclosures framed unsuccessful trials positively,
+          labels rest on the reported endpoint results and development decisions, with the same rules whatever the
+          framing.</p>
+        <a href="#evidence">Evidence construction →</a></div>
+      <div class="card point"><h3>Ranking and classification errors</h3>
+        <p>The LLM comparators had higher discrimination point estimates and lower Brier scores than either expert. At 0.5
+          the reasoning expert identified 27 of the 29 failures but flagged many successful trials, so its success
+          predictions were selective. A threshold suited to choosing trials for further review may not suit decisions
+          about continuing a programme; the rank score of the ensemble supports relative prioritization.</p>
+        <a href="#prospective">Prospective evaluation →</a></div>
+      <div class="card point"><h3>Information beyond public expectations</h3>
+        <p>Many correct comparator failure forecasts referred to earlier public assessments, while the ensemble also
+          identified failures for which no such assessment was retrieved. The audit records documented expectations and
+          cited sources; it cannot show that an outcome was unanticipated or that a source caused a forecast.</p>
+        <a href="#signals">Public negative signals →</a></div>
+      <div class="card point"><h3>Financial responses</h3>
+        <p>Failures identified by the ensemble but predicted to succeed by at least one comparator were followed by more
+          negative abnormal returns than failures identified by both comparators. Returns also depend on the size of price moves and on company exposure, and negative
+          returns after some successful readouts show that a binary outcome does not capture all information relevant to
+          valuation.</p>
+        <a href="#market">Share price responses →</a></div>
+      <div class="card point"><h3>Limits of the initial comparison</h3>
+        <p>The 69 adjudicable outcomes come from trials selected for anticipated readouts, which limits the precision of
+          comparisons across phases, and disclosure timing can change the evaluated population. Success includes advancement to a specified
+          milestone, so performance may partly reflect anticipation of development decisions. Paired forecasts recorded
+          before disclosure on common evidence snapshots would test whether improvements from model updates persist
+          prospectively.</p>
+        <a href="#phase">Discrimination by phase →</a></div>
+      <div class="card point"><h3>The benchmark</h3>
+        <p>The 5,809 ongoing trials extend evaluation beyond trials selected for imminent readouts, with forecasts that
+          stay fixed as outcomes accumulate. The cohort is restricted to eligible trials of US listed companies; other
+          sponsor populations would test generalizability more broadly.</p>
+        <a href="benchmark.html">Prospective benchmark →</a></div>
+    </div>
+  </section>
+
+  <!-- ===================================================== readout ledger -->
+  <section class="wrap section" id="readouts">
     <div class="sechead"><h2>Readout ledger</h2>
-      <p>Each label links its primary source. Scores are the committed forecasts; outlined scores are incorrect calls at 0.5.</p></div>
+      <p>The 69 adjudicated readouts with the evidence for each label and the recorded forecasts. Outlined scores are
+        incorrect predictions at 0.5.</p></div>
     <div class="filters">
-      <input type="search" id="q" placeholder="Search NCT ID, drug, sponsor, condition, note" autocomplete="off">
+      <input type="search" id="q" placeholder="Search NCT ID, intervention, sponsor, evidence" autocomplete="off">
       <select id="f-phase"><option value="">All phases</option></select>
-      <select id="f-outcome"><option value="">All outcomes</option><option value="success">Success</option><option value="fail">Failure</option></select>
+      <select id="f-outcome"><option value="">All outcomes</option><option value="success">Success</option><option value="failure">Failure</option></select>
       <span class="count" id="count"></span>
+      <a class="btn ghost small" href="downloads/trialaugur_prospective_69.csv" download>Download CSV</a>
     </div>
     <div id="grid"></div>
   </section>
 
-  <section class="wrap section">
-    <div class="sechead"><h2>Market reaction</h2>
-      <p id="mkt-sub">Share price change of the exposed listed company from the 29 July close to the mean close on the
-        readout day and the next two trading days. Exploratory.</p></div>
-    <div class="kpis" id="kpis"></div>
-    <div class="card" style="margin-top:20px"><div id="strip"></div>
-      <p class="note">Each dot is one failed trial with a listed company. Moves beyond ±100% are drawn at the edge.</p></div>
-  </section>
-
-  <section class="wrap section">
-    <div class="sechead"><h2>Hypothetical long short portfolio</h2>
-      <p id="pf-sub"></p></div>
-    <div class="card"><div id="pf-chart"></div><div class="legend" id="pf-legend"></div></div>
-    <div class="card scroll" style="margin-top:20px"><table class="t" id="pf-table"></table></div>
-    <p class="note">Hypothetical and frictionless: no leverage, transaction costs or borrowing fees; equal capital per trial;
-      positions closed in thirds over the readout day and the two following trading days. Research illustration only,
-      not investment advice.</p>
-  </section>
-
-  <section class="wrap section"><div id="notarization"></div></section>
-
   <div id="site-footer"></div>
   <script src="https://unpkg.com/tabulator-tables@5.6.1/dist/js/tabulator.min.js"></script>
-  <script src="js/common.js?v=10"></script>
-  <script src="js/results.js?v=10"></script>
+  <script src="js/common.js?v=11"></script>
+  <script src="js/results.js?v=11"></script>
 </body>
 </html>
