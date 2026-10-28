@@ -17,70 +17,16 @@
 
   <section class="wrap pagehead">
     <div class="eyebrow">Results · data cut 20 Oct 2026</div>
-    <h1>Evidence, forecasts and adjudicated outcomes</h1>
+    <h1>Forecasts, adjudicated outcomes and evidence</h1>
     <p class="lede">The values on this page are those of the figures and tables of the manuscript. Prospective results
       come from forecasts recorded before the outcome was disclosed.</p>
   </section>
 
   <nav class="subnav" aria-label="Sections"><div class="wrap">
-    <a href="#evidence">Evidence</a><a href="#prospective">Prospective</a>
-    <a href="#bytrial">By trial</a><a href="#market">Share prices</a><a href="#signals">Public signals</a>
-    <a href="#portfolio">Portfolio</a><a href="#discussion">Discussion</a><a href="#readouts">Readouts</a>
+    <a href="#prospective">Prospective</a><a href="#bytrial">By trial</a><a href="#market">Share prices</a>
+    <a href="#signals">Public signals</a><a href="#portfolio">Portfolio</a><a href="#evidence">Evidence</a>
+    <a href="#discussion">Discussion</a><a href="#readouts">Readouts</a>
   </div></nav>
-
-  <!-- ===================================================== evidence construction -->
-  <section class="wrap section" id="evidence">
-    <div class="eyebrow">TrialCurator</div>
-    <div class="sechead"><h2>Evidence construction</h2>
-      <p>TrialCurator dossiers compared with a human curator, with ClinicalTrials.gov MeSH terms and with ChEMBL.</p></div>
-    <div class="grid2 even">
-      <div class="card">
-        <h3>Human curation</h3>
-        <p class="sub" id="hc-sub"></p>
-        <div class="scroll"><table class="t" id="hc-table"></table></div>
-        <p class="note">A PhD student in biostatistics, blinded to TrialCurator's outputs, completed the same dossier
-          schema using web searches. Registry derived fields were not compared; the comparison covers the fields that
-          require biological interpretation.</p>
-      </div>
-      <div class="card">
-        <h3>Curation cost per trial</h3>
-        <p class="sub">20 randomly sampled trials</p>
-        <div id="cost-chart"></div>
-        <p class="note" id="cost-note"></p>
-      </div>
-    </div>
-    <div class="grid2 even" style="margin-top:20px">
-      <div class="card">
-        <h3>MOA and target gene coverage</h3>
-        <p class="sub" id="ch-sub"></p>
-        <div id="ch-chart"></div>
-        <div class="legend"><span><i style="background:#C55A30"></i>TrialCurator</span><span><i style="background:#B9B4A6"></i>ChEMBL</span></div>
-        <p class="note" id="ch-note"></p>
-      </div>
-      <div class="card">
-        <h3>Differing target genes and molecular targets</h3>
-        <p class="sub">Drug records in which TrialCurator records target genes absent from the ChEMBL annotation</p>
-        <div class="scroll"><table class="t" id="dg-table"></table></div>
-        <h3 style="margin-top:30px">Disease annotation</h3>
-        <p class="sub" id="mesh-sub"></p>
-        <div id="mesh-chart"></div>
-        <p class="note">Discordant pairs were reviewed for how well each MeSH term represented the registered conditions.</p>
-      </div>
-    </div>
-    <div class="card" style="margin-top:20px">
-      <h3>Positive framing of unsuccessful trials</h3>
-      <p class="sub" id="fr-sub"></p>
-      <div class="grid2 even" style="align-items:center">
-        <div id="fr-stack"></div>
-        <div id="fr-patterns"></div>
-      </div>
-      <p class="note">Framing was judged by whether the dominant message of the disclosure (title, subtitle and conclusion)
-        was favorable. Positive framing did not necessarily correspond to success under the outcome criteria. For example,
-        the final update of the phase 1b study of NXP800 in platinum resistant ovarian cancer (NCT05226507) announced that
-        development in ovarian cancer would not be pursued, while presenting two unconfirmed partial responses and three
-        cases of stable disease among 13 evaluable patients as evidence of biological activity.</p>
-    </div>
-  </section>
 
   <!-- ===================================================== prospective evaluation -->
   <section class="wrap section" id="prospective">
@@ -205,18 +151,66 @@
       assigned to each company, so their ordering can differ from that of discrimination.</p>
   </section>
 
+  <!-- ===================================================== evidence construction -->
+  <section class="wrap section" id="evidence">
+    <div class="eyebrow">TrialCurator</div>
+    <div class="sechead"><h2>Evidence construction</h2>
+      <p>TrialCurator dossiers compared with a human curator, with ClinicalTrials.gov MeSH terms and with ChEMBL.</p></div>
+    <div class="grid2 even">
+      <div class="card">
+        <h3>Human curation</h3>
+        <p class="sub" id="hc-sub"></p>
+        <div class="scroll"><table class="t" id="hc-table"></table></div>
+        <p class="note">A PhD student in biostatistics, blinded to TrialCurator's outputs, completed the same dossier
+          schema using web searches. Registry derived fields were not compared; the comparison covers the fields that
+          require biological interpretation.</p>
+      </div>
+      <div class="card">
+        <h3>Curation cost per trial</h3>
+        <p class="sub">20 randomly sampled trials</p>
+        <div id="cost-chart"></div>
+        <p class="note" id="cost-note"></p>
+      </div>
+    </div>
+    <div class="grid2 even" style="margin-top:20px">
+      <div class="card">
+        <h3>MOA and target gene coverage</h3>
+        <p class="sub" id="ch-sub"></p>
+        <div id="ch-chart"></div>
+        <div class="legend"><span><i style="background:#C55A30"></i>TrialCurator</span><span><i style="background:#B9B4A6"></i>ChEMBL</span></div>
+        <p class="note" id="ch-note"></p>
+      </div>
+      <div class="card">
+        <h3>Differing target genes and molecular targets</h3>
+        <p class="sub">Drug records in which TrialCurator records target genes absent from the ChEMBL annotation</p>
+        <div class="scroll"><table class="t" id="dg-table"></table></div>
+        <h3 style="margin-top:30px">Disease annotation</h3>
+        <p class="sub" id="mesh-sub"></p>
+        <div id="mesh-chart"></div>
+        <p class="note">Discordant pairs were reviewed for how well each MeSH term represented the registered conditions.</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:20px">
+      <h3>Positive framing of unsuccessful trials</h3>
+      <p class="sub" id="fr-sub"></p>
+      <div class="grid2 even" style="align-items:center">
+        <div id="fr-stack"></div>
+        <div id="fr-patterns"></div>
+      </div>
+      <p class="note">Framing was judged by whether the dominant message of the disclosure (title, subtitle and conclusion)
+        was favorable. Positive framing did not necessarily correspond to success under the outcome criteria. For example,
+        the final update of the phase 1b study of NXP800 in platinum resistant ovarian cancer (NCT05226507) announced that
+        development in ovarian cancer would not be pursued, while presenting two unconfirmed partial responses and three
+        cases of stable disease among 13 evaluable patients as evidence of biological activity.</p>
+    </div>
+  </section>
+
   <!-- ===================================================== discussion -->
   <section class="wrap section" id="discussion">
     <div class="eyebrow">From the manuscript</div>
     <div class="sechead"><h2>Discussion</h2>
       <p>The main points of the Discussion of the manuscript, with links to the results above.</p></div>
     <div class="grid3">
-      <div class="card point"><h3>Evidence and labels</h3>
-        <p>LLM costs below US$1 per trial support building evidence dossiers across large cohorts. Because some
-          disclosures framed unsuccessful trials positively,
-          labels rest on the reported endpoint results and development decisions, with the same rules whatever the
-          framing.</p>
-        <a href="#evidence">Evidence construction →</a></div>
       <div class="card point"><h3>Ranking and classification errors</h3>
         <p>The LLM comparators had higher discrimination point estimates and lower Brier scores than either expert. At 0.5
           the reasoning expert identified 27 of the 29 failures but flagged many successful trials, so its success
@@ -234,6 +228,12 @@
           returns after some successful readouts show that a binary outcome does not capture all information relevant to
           valuation.</p>
         <a href="#market">Share price responses →</a></div>
+      <div class="card point"><h3>Evidence and labels</h3>
+        <p>LLM costs below US$1 per trial support building evidence dossiers across large cohorts. Because some
+          disclosures framed unsuccessful trials positively,
+          labels rest on the reported endpoint results and development decisions, with the same rules whatever the
+          framing.</p>
+        <a href="#evidence">Evidence construction →</a></div>
       <div class="card point"><h3>Limits of the initial comparison</h3>
         <p>The 69 adjudicable outcomes come from trials selected for anticipated readouts, which limits the precision of
           comparisons across phases, and disclosure timing can change the evaluated population. Success includes advancement to a specified
