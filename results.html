@@ -18,13 +18,12 @@
   <section class="wrap pagehead">
     <div class="eyebrow">Results · data cut 20 Oct 2026</div>
     <h1>Evidence, forecasts and adjudicated outcomes</h1>
-    <p class="lede">The values on this page are those of the figures and tables of the manuscript. Retrospective results
-      come from trials excluded from model development; prospective results from forecasts recorded before the outcome
-      was disclosed.</p>
+    <p class="lede">The values on this page are those of the figures and tables of the manuscript. Prospective results
+      come from forecasts recorded before the outcome was disclosed.</p>
   </section>
 
   <nav class="subnav" aria-label="Sections"><div class="wrap">
-    <a href="#evidence">Evidence</a><a href="#retrospective">Retrospective</a><a href="#prospective">Prospective</a>
+    <a href="#evidence">Evidence</a><a href="#prospective">Prospective</a>
     <a href="#bytrial">By trial</a><a href="#market">Share prices</a><a href="#signals">Public signals</a>
     <a href="#portfolio">Portfolio</a><a href="#discussion">Discussion</a><a href="#readouts">Readouts</a>
   </div></nav>
@@ -80,50 +79,6 @@
         the final update of the phase 1b study of NXP800 in platinum resistant ovarian cancer (NCT05226507) announced that
         development in ovarian cancer would not be pursued, while presenting two unconfirmed partial responses and three
         cases of stable disease among 13 evaluable patients as evidence of biological activity.</p>
-    </div>
-  </section>
-
-  <!-- ===================================================== development and retrospective evaluation -->
-  <section class="wrap section" id="retrospective">
-    <div class="eyebrow">TrialAugur · development and retrospective test</div>
-    <div class="sechead"><h2>Development and retrospective evaluation</h2>
-      <p id="retro-sub"></p></div>
-    <div class="grid2 even">
-      <div class="card">
-        <h3>Classifier selection for the embedding expert</h3>
-        <p class="sub">ROC AUC in nested cross validation grouped by primary investigational drug, 1,800 development trials</p>
-        <div id="clf-chart"></div>
-        <p class="note">Dot, mean of five outer folds; whiskers, one standard deviation; small circles, individual folds.
-          TabPFN-3 was selected.</p>
-      </div>
-      <div class="card">
-        <h3>Effect of the evidence dossier on the reasoning expert</h3>
-        <p class="sub" id="dos-sub"></p>
-        <div id="dos-chart"></div>
-        <p class="note" id="dos-note"></p>
-      </div>
-    </div>
-    <div class="grid2 even" style="margin-top:20px">
-      <div class="card">
-        <h3>Discrimination in the retrospective test cohort</h3>
-        <p class="sub" id="test-sub"></p>
-        <div id="test-roc"></div>
-        <div id="test-ap" style="margin-top:6px"></div>
-        <p class="note">Intervals are 95% percentile bootstrap intervals from 2,000 resamples of trials. Dotted line in the AP
-          panel: success rate.</p>
-      </div>
-      <div class="card">
-        <h3>Precision and recall in the test cohort</h3>
-        <p class="sub">Success is the positive class</p>
-        <div id="pr-chart"></div>
-        <div class="legend" id="pr-legend"></div>
-      </div>
-    </div>
-    <div class="card scroll" style="margin-top:20px">
-      <h3>Discrimination across cohorts</h3>
-      <p class="sub">Validation (150 trials), retrospective test (143) and initial prospective comparison (69)</p>
-      <table class="t" id="coh-table"></table>
-      <p class="note" id="coh-note"></p>
     </div>
   </section>
 
@@ -257,8 +212,8 @@
       <p>The main points of the Discussion of the manuscript, with links to the results above.</p></div>
     <div class="grid3">
       <div class="card point"><h3>Evidence and labels</h3>
-        <p>With the same GPT-5 model, the full TrialCurator dossier improved discrimination over registry information
-          alone, and LLM costs stayed below US$1 per trial. Because some disclosures framed unsuccessful trials positively,
+        <p>LLM costs below US$1 per trial support building evidence dossiers across large cohorts. Because some
+          disclosures framed unsuccessful trials positively,
           labels rest on the reported endpoint results and development decisions, with the same rules whatever the
           framing.</p>
         <a href="#evidence">Evidence construction →</a></div>

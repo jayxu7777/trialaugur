@@ -1,10 +1,10 @@
-// TrialAugur results: evidence construction, development and retrospective test, prospective evaluation,
+// TrialAugur results: evidence construction, prospective evaluation,
 // scores by trial, share price responses, portfolio and the readout ledger. Values are those of the paper's figures.
 
 (async function () {
   const [R, rows] = await Promise.all([loadJSON("data/results.json"), loadJSON("data/readouts.json")]);
   const MODELS = R.models, NAME = Object.fromEntries(MODELS.map((m) => [m.key, m.name]));
-  const E = R.evidence, T = R.retro, P = R.prospective;
+  const E = R.evidence, P = R.prospective;
   const TC = MCOL.ens, GREY = COL.other;
   const dotName = (k) => `<span class="dot" style="background:${MCOL[k]}"></span>${NAME[k]}`;
   const ci3 = (v) => `<span class="ci">${ciText(v.slice(1))}</span>`;
@@ -95,138 +95,6 @@
     hbars(document.getElementById("fr-patterns"),
       F.patterns.map((p) => ({ label: p.label, v: p.n, color: "#9A3F22", text: String(p.n) })),
       { max: 4, ticks: [0, 1, 2, 3, 4], left: 250, right: 30, rowh: 32, aria: "Patterns of positive framing" });
-  })();
-
-  // ===================================================== development and retrospective evaluation
-  (function () {
-    const Te = T.test, TM = Object.fromEntries(Te.models.map((m) => [m.key, m]));
-    document.getElementById("retro-sub").textContent =
-      `The embedding expert was developed on the ${T.dev_n.toLocaleString()} fitting trials of the development cohort. Both ` +
-      `experts and the rank ensemble were then evaluated on a separate retrospective test cohort of ${Te.n} trials.`;
-
-    // classifier comparison: mean and SD with fold values
-    (function () {
-      const el = document.getElementById("clf-chart"), C = T.classifiers;
-      const W = fitW(el, 540), left = W < 440 ? 128 : 150, right = 54, top = 10, rowh = 40, H = top + rowh * C.length + 30, min = 0.6, max = 0.9;
-      const sx = (v) => left + ((v - min) / (max - min)) * (W - left - right);
-      let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Classifier comparison">`;
-      [0.6, 0.7, 0.8, 0.9].forEach((t) => {
-        s += `<line x1="${sx(t)}" x2="${sx(t)}" y1="${top - 4}" y2="${H - 26}" stroke="${COL.grid}"/>`;
-        s += `<text x="${sx(t)}" y="${H - 8}" font-size="12" fill="${COL.axis}" text-anchor="middle">${t}</text>`;
-      });
-      C.forEach((c, i) => {
-        const y = top + rowh * i + rowh / 2, col = c.selected ? MCOL.embedding : COL.axis;
-        const tip = `<b>${c.name}</b><br>ROC AUC ${f3(c.mean)} (SD ${f3(c.sd)})<br>Folds: ${c.folds.map(f3).join(", ")}`;
-        s += `<g data-tip="${esc(tip)}"><rect x="0" y="${y - rowh / 2}" width="${W}" height="${rowh}" fill="transparent"/>`;
-        s += `<text x="${left - 12}" y="${y + 4}" font-size="13" fill="${COL.text}" text-anchor="end" ${c.selected ? 'font-weight="600"' : ""}>${c.name}</text>`;
-        s += `<line x1="${sx(c.mean - c.sd)}" x2="${sx(c.mean + c.sd)}" y1="${y}" y2="${y}" stroke="${col}" stroke-width="2" stroke-linecap="round"/>`;
-        c.folds.forEach((f) => { s += `<circle cx="${sx(f)}" cy="${y}" r="3.5" fill="${COL.surface}" stroke="${col}" stroke-width="1.3"/>`; });
-        s += `<circle cx="${sx(c.mean)}" cy="${y}" r="6.5" fill="${col}" stroke="${COL.surface}" stroke-width="2"/>`;
-        s += `<text x="${W - 6}" y="${y + 4}" font-size="12" fill="${COL.text}" text-anchor="end">${f3(c.mean)}</text></g>`;
-      });
-      el.innerHTML = s + "</svg>";
-      bindTips(el);
-    })();
-
-    // dossier versus registry profile
-    const D = T.dossier;
-    document.getElementById("dos-sub").textContent =
-      `GPT-5 given the TrialCurator dossier or the ClinicalTrials.gov trial profile in ${D.n} validation trials ` +
-      `(${D.nS} successes, ${D.nF} failures), probabilities averaged over ${D.runs} runs`;
-    dotPlot(document.getElementById("dos-chart"), D.rows.flatMap((r) => [
-      { name: `${r.metric} · TrialCurator dossier`, color: MCOL.reasoning, v: r.dossier, lo: r.dossier_ci[0], hi: r.dossier_ci[1] },
-      { name: `${r.metric} · registry profile`, color: COL.axis, v: r.registry, lo: r.registry_ci[0], hi: r.registry_ci[1] },
-    ]), { min: 0.7, max: 1.0, ticks: [0.7, 0.8, 0.9, 1], metric: "", sep: [1], left: 220 });
-    document.getElementById("dos-note").textContent =
-      `Paired difference, dossier minus registry profile: ` +
-      D.rows.map((r) => `${r.metric} +${f3(r.diff)} (${ciText(r.diff_ci)})`).join("; ") +
-      `. Both conditions used the same outcome definition, prompt and inference settings. Intervals are 95% bootstrap intervals.`;
-
-    // test cohort
-    document.getElementById("test-sub").textContent =
-      `${Te.n} trials (${Te.nS} successes, ${Te.nF} failures) with results first disclosed between ${Te.window}, after ` +
-      `GPT-5's reported knowledge cutoff of 30 September 2024`;
-    const three = ["reasoning", "embedding", "ens"];
-    const panel = (id, metric, key, base) => {
-      document.getElementById(id).innerHTML = `<div class="panelhead">${metric}</div><div></div>`;
-      dotPlot(document.getElementById(id).lastChild,
-        three.map((k) => ({ name: NAME[k], key: k, v: TM[k][key][0], lo: TM[k][key][1], hi: TM[k][key][2] })),
-        { min: 0.5, max: 1.0, ticks: [0.5, 0.75, 1], base, metric, left: 210 });
-    };
-    panel("test-roc", "ROC AUC", "roc", 0.5);
-    panel("test-ap", "AP", "ap", Te.nS / Te.n);
-
-    // precision recall curves
-    (function () {
-      const el = document.getElementById("pr-chart");
-      const W = fitW(el, 540), H = W < 440 ? 320 : 380, l = 52, r = 18, t = 12, b = 40, ymin = 0.45, ymax = 1.0;
-      const sx = (v) => l + v * (W - l - r), sy = (v) => t + (1 - (Math.max(ymin, v) - ymin) / (ymax - ymin)) * (H - t - b);
-      const dash = { reasoning: "7 3 2 3", embedding: "6 4", ens: "" };
-      let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Precision recall curves">`;
-      [0.5, 0.6, 0.7, 0.8, 0.9, 1].forEach((g) => {
-        s += `<line x1="${l}" x2="${W - r}" y1="${sy(g)}" y2="${sy(g)}" stroke="${COL.grid}"/>`;
-        s += `<text x="${l - 8}" y="${sy(g) + 4}" font-size="12" fill="${COL.axis}" text-anchor="end">${g.toFixed(1)}</text>`;
-      });
-      [0, 0.25, 0.5, 0.75, 1].forEach((g) => {
-        s += `<text x="${sx(g)}" y="${H - 20}" font-size="12" fill="${COL.axis}" text-anchor="middle">${g}</text>`;
-      });
-      s += `<text x="${(l + W - r) / 2}" y="${H - 3}" font-size="12" fill="${COL.axis}" text-anchor="middle">Recall</text>`;
-      s += `<text x="12" y="${(t + H - b) / 2}" font-size="12" fill="${COL.axis}" text-anchor="middle" transform="rotate(-90 12 ${(t + H - b) / 2})">Precision</text>`;
-      const prev = Te.nS / Te.n;
-      s += `<line x1="${l}" x2="${W - r}" y1="${sy(prev)}" y2="${sy(prev)}" stroke="${COL.base}" stroke-dasharray="2 4" stroke-width="1.2"/>`;
-      for (const k of three) {
-        const pts = Te.pr[k];
-        let d = `M${sx(pts[0][0]).toFixed(1)},${sy(pts[0][1]).toFixed(1)}`;
-        for (let i = 1; i < pts.length; i++) d += `L${sx(pts[i][0]).toFixed(1)},${sy(pts[i - 1][1]).toFixed(1)}L${sx(pts[i][0]).toFixed(1)},${sy(pts[i][1]).toFixed(1)}`;
-        s += `<path d="${d}" fill="none" stroke="${MCOL[k]}" stroke-width="2" ${dash[k] ? `stroke-dasharray="${dash[k]}"` : ""} stroke-linejoin="round"/>`;
-      }
-      s += `<rect id="pr-hit" x="${l}" y="${t}" width="${W - l - r}" height="${H - t - b}" fill="transparent"/>`;
-      s += `<line id="pr-cross" x1="0" x2="0" y1="${t}" y2="${H - b}" stroke="${COL.axis}" stroke-dasharray="2 3" visibility="hidden"/>`;
-      el.innerHTML = s + "</svg>";
-      const svg = el.querySelector("svg"), hit = el.querySelector("#pr-hit"), cross = el.querySelector("#pr-cross");
-      hit.addEventListener("mousemove", (e) => {
-        const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
-        const rec = Math.max(0, Math.min(1, (pt.matrixTransform(svg.getScreenCTM().inverse()).x - l) / (W - l - r)));
-        cross.setAttribute("x1", sx(rec)); cross.setAttribute("x2", sx(rec)); cross.setAttribute("visibility", "visible");
-        const at = (k) => { // highest precision reached at or beyond this recall
-          const ok = Te.pr[k].filter((p) => p[0] >= rec - 1e-9);
-          return ok.length ? Math.max(...ok.map((p) => p[1])) : null;
-        };
-        TIP.show(`<b>Recall ${rec.toFixed(2)}</b><br>` + three.map((k) => `${NAME[k]}: precision ${f3(at(k))}`).join("<br>"), e);
-      });
-      hit.addEventListener("mouseleave", () => { cross.setAttribute("visibility", "hidden"); TIP.hide(); });
-      document.getElementById("pr-legend").innerHTML = three.map((k) =>
-        `<span><svg width="26" height="8" style="vertical-align:1px;margin-right:7px"><line x1="0" x2="26" y1="4" y2="4" stroke="${MCOL[k]}" stroke-width="2.4" ${dash[k] ? `stroke-dasharray="${dash[k]}"` : ""}/></svg>${NAME[k]}</span>`).join("") +
-        `<span>Dotted line: success rate (${f3(Te.nS / Te.n)})</span>`;
-    })();
-
-    // across cohorts and test cohort classification
-    const coh = T.cohorts;
-    let h = `<thead><tr><th>Method</th><th class="num">Validation<br>ROC AUC</th><th class="num">Validation<br>AP</th>
-      <th class="num">Test<br>ROC AUC</th><th class="num">Test<br>AP</th><th class="num">Prospective<br>ROC AUC</th>
-      <th class="num">Prospective<br>AP</th></tr></thead><tbody>`;
-    for (const c of coh) {
-      h += `<tr><td class="name">${dotName(c.key)}</td><td class="num">${f3(c.val_roc)}</td><td class="num">${f3(c.val_ap)}</td>
-        <td class="num">${f3(c.test_roc[0])}${ci3(c.test_roc)}</td><td class="num">${f3(c.test_ap[0])}${ci3(c.test_ap)}</td>
-        <td class="num">${f3(c.pro_roc[0])}${ci3(c.pro_roc)}</td><td class="num">${f3(c.pro_ap[0])}${ci3(c.pro_ap)}</td></tr>`;
-    }
-    h += `</tbody>`;
-    h += `<tbody><tr class="group"><td colspan="7">Test cohort: calibration and classification at 0.5</td></tr>
-      <tr><th>Method</th><th class="num">Brier score</th><th class="num">ECE</th><th class="num">Sensitivity</th>
-      <th class="num">Specificity</th><th class="num">Balanced<br>accuracy</th><th class="num">Ensemble minus<br>expert, ROC AUC</th></tr>`;
-    for (const k of three) {
-      const m = TM[k];
-      h += `<tr><td class="name">${dotName(k)}</td>
-        <td class="num">${m.brier ? f3(m.brier[0]) + ci3(m.brier) : "<span class='muted'>rank score</span>"}</td>
-        <td class="num">${m.ece ? f3(m.ece[0]) + ci3(m.ece) : ""}</td>
-        <td class="num">${m.tp}/${Te.nS} (${pct1(m.tp, Te.nS)})</td><td class="num">${m.tn}/${Te.nF} (${pct1(m.tn, Te.nF)})</td>
-        <td class="num">${f3(m.bacc)}</td>
-        <td class="num">${m.ens_minus ? minus(f3(m.ens_minus[0])) + ci3(m.ens_minus) : ""}</td></tr>`;
-    }
-    document.getElementById("coh-table").innerHTML = h + `</tbody>`;
-    document.getElementById("coh-note").textContent =
-      `Validation: 150 trials reserved from the development cohort, point estimates. Test and prospective values carry 95% ` +
-      `bootstrap intervals. ECE, expected calibration error with ten equal width bins.`;
   })();
 
   // ===================================================== prospective evaluation
