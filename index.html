@@ -9,11 +9,21 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=11">
+  <link rel="stylesheet" href="css/style.css?v=12">
   <script src="js/config.js?v=11"></script>
 </head>
 <body data-page="home">
   <div id="site-header"></div>
+
+  <section class="wrap intro">
+    <div class="introframe">
+      <video id="intro-video" src="media/trialaugur_intro.mp4" poster="media/trialaugur_intro_poster.jpg" muted playsinline preload="auto"
+        aria-label="Five minute introduction to TrialCurator and TrialAugur, with burned in subtitles"></video>
+      <button class="introbtn sound" id="intro-sound" type="button" hidden></button>
+      <button class="introbtn center" id="intro-play" type="button" hidden></button>
+    </div>
+    <p class="introcap">A five minute introduction to TrialCurator and TrialAugur. Subtitles are on screen; select Sound on to listen.</p>
+  </section>
 
   <section class="hero"><div class="wrap heroin">
     <div>
@@ -122,5 +132,6 @@
   <div id="site-footer"></div>
   <script src="js/common.js?v=11"></script>
   <script src="js/home.js?v=11"></script>
+  <script src="js/intro.js?v=12"></script>
 </body>
 </html>
